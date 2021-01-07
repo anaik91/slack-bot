@@ -21,7 +21,7 @@ def process(channel,text):
         assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
         print(f"Got an error: {e.response['error']}")
 
-@slack_events_adapter.on("message")
+@slack_events_adapter.on("app_mention")
 def message(payload):
     """Display the onboarding welcome message after receiving a message
     that contains "start".

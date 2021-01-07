@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: python-slack-bot
-        image: anaikdocker/slackbot:v11
+        image: anaikdocker/slackbot:v12
         ports:
         - containerPort: 5000
         env:
