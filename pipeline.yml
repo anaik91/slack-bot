@@ -13,11 +13,12 @@ jobs:
 - name: update-deployment
   plan:
   - get: git-repo
+    trigger: true
     passed:
       - build-docker-image
   - put: kubectl
     params:
-      file: "git-repo/k8s/deploy.yml"
+      file: "git-repo/k8s/deploy.yaml"
 
 resource_types:
 - name: concourse-kubectl-resource-type
