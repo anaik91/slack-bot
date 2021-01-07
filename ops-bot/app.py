@@ -16,26 +16,18 @@ def process(channel,text):
     try:
         response = slack_web_client.chat_postMessage(channel=channel, text="BOT RECEIVED : {}".format(text))
     except SlackApiError as e:
-        # You will get a SlackApiError if "ok" is False
         assert e.response["ok"] is False
-        assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
-        print(f"Got an error: {e.response['error']}")
+        assert e.response["error"] 
+        logging.error(f"Got an error: {e.response['error']}")
 
 @slack_events_adapter.on("app_mention")
-def message(payload):
-    """Display the onboarding welcome message after receiving a message
-    that contains "start".
-    """
+def app_mention(payload):
     event = payload.get("event", {})
     channel_id = event.get("channel")
     user_id = event.get("user")
     text = event.get("text")
     logging.info(event)
-    if 'bot_id' not in event.keys():
-        process(channel_id,text)
-    else:
-        logging.warning('Not Sending .Bot response')
-    
+    process(channel_id,text)
 
 if __name__ == "__main__":
     logger = logging.getLogger()
