@@ -11,6 +11,14 @@ slack_events_adapter = SlackEventAdapter(os.environ["SLACK_SIGNING_SECRET"], "/s
 
 # Initialize a Web API client
 slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
+help_text="""
+Invalid Command.
+
+Avialable commands:
+-> help
+-> run
+-> version
+"""
 
 def process(channel,text):
     try:
@@ -24,10 +32,20 @@ def process(channel,text):
 def app_mention(payload):
     event = payload.get("event", {})
     channel_id = event.get("channel")
-    user_id = event.get("user")
-    text = event.get("text")
+    blocks = event.get("blocks")
+    command_text=help_text
+    try:
+        rich_text_elements = [ each_block['elements'][0]['elements'] for each_block in blocks if each_block['type'] == 'rich_text' ][0]
+        command_data=rich_text_elements[-1]
+        if command_data['type'] == 'user':
+            process(channel_id,help_text)
+        else:
+            command_text=command_data['text'].lstrip()
+    except (KeyError,IndexError):
+        process(channel_id,help_text)
+        return True
     logging.info(event)
-    process(channel_id,text)
+    process(channel_id,command_text)
 
 if __name__ == "__main__":
     logger = logging.getLogger()
