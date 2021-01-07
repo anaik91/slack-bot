@@ -4,11 +4,13 @@ jobs:
   public: true
   serial: true
   plan:
+  - get: version
   - get: git-repo
     trigger: true
   - put: docker-image
     params:
       build: git-repo
+      tag_file: version/number
 
 - name: update-deployment
   plan:
@@ -28,6 +30,18 @@ resource_types:
     tag: latest
 
 resources:
+- name: version
+  type: semver
+  source:
+    driver: git
+    uri: https://github.tools.sap/I500506/innoweek-ops-bot.git
+    branch: version
+    file: version
+    private_key: null
+    skip_ssl_verification: true
+    password: ((credentials.landscape_git_password))
+    username: ((credentials.landscape_git_user))
+
 - name: git-repo
   type: git
   source:
