@@ -55,7 +55,7 @@ def app_mention(payload):
     elif command_text == 'run':
         process(channel_id,text='I ran')
     elif command_text == 'random':
-        process(channel_id,blocks=random_post(user))
+        process(channel_id,blocks=get_random_post(user))
     else:
         process(channel_id,text=command_text)
 

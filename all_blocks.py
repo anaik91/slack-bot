@@ -35,7 +35,7 @@ def get_help(user):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Below are the list of avialable commands\n• help \n • version \n • run \n • random"
+                    "text": "Below are the list of available commands\n• help \n • version \n • run \n • random"
                 }
             },
             {
