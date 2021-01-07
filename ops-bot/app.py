@@ -36,7 +36,7 @@ def process(channel,text):
 def update_emoji(payload):
     event = payload.get("event", {})
     logging.info(event)
-    channel_id = event.get("channel")
+    channel_id = event['item']['channel']
     command_text = 'I like the Emoji. Kudos !!'
     process(channel_id,command_text)
 
