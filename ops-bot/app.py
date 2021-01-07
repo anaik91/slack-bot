@@ -15,7 +15,6 @@ slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 def process(channel,text):
     try:
         response = slack_web_client.chat_postMessage(channel=channel, text="BOT_SENT : {}".format(text))
-        assert response["message"]["text"] == " You sent : {}".format(text)
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
         assert e.response["ok"] is False
