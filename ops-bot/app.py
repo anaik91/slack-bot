@@ -15,7 +15,7 @@ slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 def process(channel,text):
     try:
         response = slack_web_client.chat_postMessage(channel=channel, text=" You sent : {}".format(text))
-        assert response["message"]["text"] == "Hello world!"
+        assert response["message"]["text"] == " You sent : {}".format(text)
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
         assert e.response["ok"] is False
@@ -32,8 +32,8 @@ def message(payload):
     channel_id = event.get("channel")
     user_id = event.get("user")
     text = event.get("text")
-    logging.info('text : {}'.format(text))
-    process(channel_id,text)
+    logging.info('text ====>  {}'.format(text))
+    process(channel_id,text + 'User: ' + user_id)
 
 
 if __name__ == "__main__":
