@@ -4,7 +4,7 @@ from flask import Flask
 from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack_sdk.errors import SlackApiError
-from all_blocks import get_help
+from all_blocks import get_help , get_random_post
 
 # Initialize a Flask app to host the events adapter
 app = Flask(__name__)
@@ -54,6 +54,8 @@ def app_mention(payload):
         process(channel_id,text='Version : 1.0.0')
     elif command_text == 'run':
         process(channel_id,text='I ran')
+    elif command_text == 'random':
+        process(channel_id,blocks=random_post(user))
     else:
         process(channel_id,text=command_text)
 

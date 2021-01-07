@@ -1,3 +1,20 @@
+def get_random_post(user):
+    block =  [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Hi <@{}> :innocent: \nThe Lorem Ipsum for photos.".format(user)
+			},
+			"accessory": {
+				"type": "image",
+				"image_url": "https://picsum.photos/200/300",
+				"alt_text": "photo"
+			}
+		}
+	]
+    return block
+
 def get_help(user):
     help_block = [
             {
@@ -18,7 +35,7 @@ def get_help(user):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Below are the list of avialable commands\n• help \n • version \n • run"
+                    "text": "Below are the list of avialable commands\n• help \n • version \n • run \n • random"
                 }
             },
             {
