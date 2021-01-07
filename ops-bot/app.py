@@ -39,13 +39,17 @@ def app_mention(payload):
         command_data=rich_text_elements[-1]
         if command_data['type'] == 'user':
             process(channel_id,help_text)
+            return True
         else:
-            command_text=command_data['text'].lstrip()
+            command_text=command_data['text'].strip()
     except (KeyError,IndexError):
         process(channel_id,help_text)
         return True
     logging.info(event)
-    process(channel_id,command_text)
+    if command_text == 'help':
+        process(channel_id,help_text)
+    else:
+        process(channel_id,command_text)
 
 if __name__ == "__main__":
     logger = logging.getLogger()
