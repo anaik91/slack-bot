@@ -30,12 +30,11 @@ def message(payload):
     channel_id = event.get("channel")
     user_id = event.get("user")
     text = event.get("text")
-    logging.info('event ====>  {}'.format(event))
-    logging.info('channel_id ====>  {}'.format(channel_id))
-    logging.info('user_id ====>  {}'.format(user_id))
-    logging.info('text ====>  {}'.format(text))
+    logging.info(event)
     if 'BOT_SENT' not in text:
         process(channel_id,text + 'User: ' + user_id)
+    else:
+        logging.warn('Not Sending .Bot response')
     
 
 if __name__ == "__main__":
