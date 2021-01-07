@@ -11,18 +11,22 @@ slack_events_adapter = SlackEventAdapter(os.environ["SLACK_SIGNING_SECRET"], "/s
 
 # Initialize a Web API client
 slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
-help_text="""
-Invalid Command.
 
-Avialable commands:
--> help
--> run
--> version
-"""
+def get_help_command(comment):
+    help_text="""
+    {}
+
+    Avialable commands:
+    -> help
+    -> run
+    -> version
+    """.format(comment)
+
+    return help_text
 
 def process(channel,text):
     try:
-        response = slack_web_client.chat_postMessage(channel=channel, text="BOT RECEIVED : {}".format(text))
+        response = slack_web_client.chat_postMessage(channel=channel, text=text)
     except SlackApiError as e:
         assert e.response["ok"] is False
         assert e.response["error"] 
@@ -33,21 +37,23 @@ def app_mention(payload):
     event = payload.get("event", {})
     channel_id = event.get("channel")
     blocks = event.get("blocks")
-    command_text=help_text
+    command_text=get_help_command('Invalid Command')
     try:
         rich_text_elements = [ each_block['elements'][0]['elements'] for each_block in blocks if each_block['type'] == 'rich_text' ][0]
         command_data=rich_text_elements[-1]
         if command_data['type'] == 'user':
-            process(channel_id,help_text)
+            process(channel_id,command_text)
             return True
         else:
             command_text=command_data['text'].strip()
     except (KeyError,IndexError):
-        process(channel_id,help_text)
+        process(channel_id,command_text)
         return True
     logging.info(event)
     if command_text == 'help':
-        process(channel_id,help_text)
+        process(channel_id,get_help_command('As Requested'))
+    elif command_text == 'version':
+        process(channel_id,'Version : 1.0.0')
     else:
         process(channel_id,command_text)
 
