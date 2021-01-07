@@ -32,6 +32,13 @@ def process(channel,text):
         assert e.response["error"] 
         logging.error(f"Got an error: {e.response['error']}")
 
+@slack_events_adapter.on("reaction_added")
+def update_emoji(payload):
+    event = payload.get("event", {})
+    channel_id = event.get("channel")
+    command_text = 'I like the Emoji. Kudos !!'
+    process(channel_id,command_text)
+
 @slack_events_adapter.on("app_mention")
 def app_mention(payload):
     event = payload.get("event", {})
@@ -54,6 +61,8 @@ def app_mention(payload):
         process(channel_id,get_help_command('As Requested'))
     elif command_text == 'version':
         process(channel_id,'Version : 1.0.0')
+    elif command_text == 'run':
+        process(channel_id,'I ran')
     else:
         process(channel_id,command_text)
 
