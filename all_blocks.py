@@ -4,7 +4,7 @@ def get_help(user):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Dear <@{}> :wave:".format(user)
+                    "text": "Hi <@{}> :wave:".format(user)
                 }
             },
             {
