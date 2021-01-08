@@ -39,6 +39,7 @@ jobs:
     passed:
       - build-docker-image
   - get: data
+    trigger: true
   - task: kubectl-apply
     config:
       platform: linux
