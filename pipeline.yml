@@ -24,8 +24,11 @@ jobs:
       run:
         path: sh
         args:
-        - -exc
-        - ls -la; cat $version > data/version
+        - -c
+        - |
+          ls -la
+          cat $version > data/version
+          cat data/version
       outputs:
       - name: data
 
@@ -41,6 +44,7 @@ jobs:
       platform: linux
       inputs:
       - name: data
+      - name: git-repo
       image_resource:
         type: registry-image
         source: 
@@ -56,6 +60,7 @@ jobs:
         - -c
         - |
           image_version=$(cat data/version)
+          echo $image_version
           sed -i 's/image_version/${image_version}/g' git-repo/k8s/deploy.yaml
           sed -i 's/kube_api_server_uri/${kube_api_server_uri}/g' git-repo/k8s/kubeconfig.yaml
           sed -i 's/kube_api_token/${kube_api_token}/g' git-repo/k8s/kubeconfig.yaml
