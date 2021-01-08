@@ -59,6 +59,7 @@ jobs:
         args:
         - -c
         - |
+          ls -l
           image_version=$(cat data/version)
           echo $image_version
           sed -i 's/image_version/${image_version}/g' git-repo/k8s/deploy.yaml
