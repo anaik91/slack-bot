@@ -7,6 +7,7 @@ jobs:
   - get: git-repo
     trigger: true
   - get: data
+    trigger: true
   - put: datetime-version
   - put: docker-image
     params:
