@@ -59,6 +59,12 @@ def app_mention(payload):
     else:
         process(channel_id,text=command_text)
 
+@slack_events_adapter.on("message")
+def message(payload):
+    event = payload.get("event", {})
+    logging.info(event)
+
+    
 if __name__ == "__main__":
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
