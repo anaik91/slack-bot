@@ -47,6 +47,8 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
+    passed:
+    - build-docker-image
   - task: kubectl-get
     config:
       platform: linux
@@ -74,6 +76,10 @@ jobs:
           kubectl get pods -o wide
           IP=$(kubectl get svc python-slack-bot-svc -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
           curl "$IP:8080/ping"
+          status=$?
+          if [ $status -ne 0 ]; then
+              exit 1
+          fi
 resource_types:
 - name: datetime-version
   type: registry-image
