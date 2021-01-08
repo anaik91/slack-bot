@@ -11,26 +11,6 @@ jobs:
     params:
       build: git-repo
       tag_file: datetime-version/version
-  - task: make-a-file
-    config:
-      platform: linux
-      inputs:
-      - name: datetime-version
-      image_resource:
-        type: registry-image
-        source: { repository: busybox }
-      params:
-        version: datetime-version/version
-      run:
-        path: sh
-        args:
-        - -c
-        - |
-          ls -la
-          cat $version > data/version
-          cat data/version
-      outputs:
-      - name: data
   - task: kubectl-apply
     config:
       platform: linux
@@ -59,9 +39,41 @@ jobs:
           sed -i 's@kube_api_server_uri@'"$kube_api_server_uri"'@' git-repo/k8s/kubeconfig.yaml
           mkdir -p ~/.kube
           cp git-repo/k8s/kubeconfig.yaml ~/.kube/config
-          cat  git-repo/k8s/kubeconfig.yaml
           kubectl apply -f git-repo/k8s/deploy.yaml
 
+- name: verify-deployment
+  public: true
+  serial: true
+  plan:
+  - get: git-repo
+    trigger: true
+  - task: kubectl-get
+    config:
+      platform: linux
+      inputs:
+      - name: git-repo
+      image_resource:
+        type: registry-image
+        source: 
+          repository: alpine/k8s 
+          tag: 1.14.9
+      params:
+        version: files/version
+        kube_api_server_uri: ((credentials.kube_api_server_uri))
+        kube_api_token: ((credentials.kube_api_token))
+      run:
+        path: /bin/sh
+        args:
+        - -c
+        - |
+          ls -l
+          sed -i 's@kube_api_token@'"$kube_api_token"'@' git-repo/k8s/kubeconfig.yaml
+          sed -i 's@kube_api_server_uri@'"$kube_api_server_uri"'@' git-repo/k8s/kubeconfig.yaml
+          mkdir -p ~/.kube
+          cp git-repo/k8s/kubeconfig.yaml ~/.kube/config
+          kubectl get pods -o wide
+          IP=$(kubectl get svc python-slack-bot-svc -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          curl "$IP:8080/ping"
 resource_types:
 - name: datetime-version
   type: registry-image

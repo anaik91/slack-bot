@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask
+from flask import Flask , jsonify
 from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack_sdk.errors import SlackApiError
@@ -64,7 +64,10 @@ def message(payload):
     event = payload.get("event", {})
     logging.info(event)
 
-    
+@app.route('/ping')
+def ping():
+    return jsonify({'status': 'ok'})
+
 if __name__ == "__main__":
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
