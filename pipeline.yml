@@ -4,13 +4,30 @@ jobs:
   public: true
   serial: true
   plan:
-  - get: version
   - get: git-repo
     trigger: true
+  - put: datetime-version
   - put: docker-image
     params:
       build: git-repo
-      tag_file: version/number
+      tag_file: datetime-version/version
+  - task: make-a-file
+    config:
+      platform: linux
+      inputs:
+      - name: datetime-version
+      image_resource:
+        type: registry-image
+        source: { repository: busybox }
+      params:
+        version: datetime-version/version
+      run:
+        path: sh
+        args:
+        - -exc
+        - ls -la; cat $version
+      outputs:
+        - name: files
 
 - name: update-deployment
   plan:
@@ -18,29 +35,47 @@ jobs:
     trigger: true
     passed:
       - build-docker-image
-  - put: kubectl
-    params:
-      file: "git-repo/k8s/deploy.yaml"
+  - task: make-a-file
+    config:
+      platform: linux
+      inputs:
+      - name: datetime-version
+      image_resource:
+        type: registry-image
+        source: 
+          repository: alpine/k8s 
+          tag: 1.14.9
+      params:
+        version: datetime-version/version
+        kube_api_server_uri: ((credentials.kube_api_server_uri))
+        kube_api_token: ((credentials.kube_api_token))
+      run:
+        path: /bin/sh
+        args:
+        - -c
+        - |
+          image_version=$(cat $version)
+          sed -i 's/image_version/${image_version}/g' git-repo/k8s/deploy.yaml
+          sed -i 's/kube_api_server_uri/${kube_api_server_uri}/g' git-repo/k8s/kubeconfig.yaml
+          sed -i 's/kube_api_token/${kube_api_token}/g' git-repo/k8s/kubeconfig.yaml
+          mkdir -p ~/.kube
+          cp git-repo/k8s/kubeconfig.yaml ~/.kube/config
+          kubectl apply -f git-repo/k8s/deploy.yaml
+      outputs:
+        - name: files
 
 resource_types:
-- name: concourse-kubectl-resource-type
-  type: docker-image
-  source: 
-    repository: jmkarthik/concourse-kubectl-resource
-    tag: latest
+- name: datetime-version
+  type: registry-image
+  source:
+    repository: dcsg/datetime-version-resource
 
 resources:
-- name: version
-  type: semver
+- name: datetime-version
+  type: datetime-version
   source:
-    driver: git
-    uri: https://github.tools.sap/I500506/innoweek-ops-bot.git
-    branch: version
-    file: version
-    private_key: null
-    skip_ssl_verification: true
-    password: ((credentials.landscape_git_password))
-    username: ((credentials.landscape_git_user))
+    timezone: 'Europe/Lisbon' # default is 'UTC'
+    format: '20060102.150405' # default is '20060102-150405'
 
 - name: git-repo
   type: git
@@ -59,11 +94,3 @@ resources:
     username: ((credentials.docker_user))
     password: ((credentials.docker_password))
     repository: anaikdocker/slackbot
-
-- name: kubectl
-  type: concourse-kubectl-resource-type
-  source:
-    api_server_uri: ((credentials.kube_api_server_uri))
-    namespace: default
-    certificate_authority_data: ((credentials.kube_certificate_authority_data))
-    token: ((credentials.kube_api_token))
