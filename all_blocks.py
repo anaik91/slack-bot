@@ -1,3 +1,15 @@
+def get_run(user):
+    block =  [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Hi <@{}> \n I am Running  :runner:".format(user)
+			}
+		}
+	]
+    return block
+
 def get_random_post(user):
     block =  [
 		{
