@@ -80,12 +80,27 @@ jobs:
           if [ $status -ne 0 ]; then
               exit 1
           fi
+    on_failure:
+      put: notify
+      params:
+        message: Bot Health Verification Failed 
+        mode: concise
+        alert_type: failed
+    on_success:
+      put: notify
+      params:
+        message: Bot Build and Health Verification Successfull 
+        mode: concise
+        alert_type: success
 resource_types:
 - name: datetime-version
   type: registry-image
   source:
     repository: dcsg/datetime-version-resource
-
+- name: slack-notifier
+  type: docker-image
+  source:
+    repository: mockersf/concourse-slack-notifier
 
 resources:
 - name: datetime-version
@@ -111,3 +126,8 @@ resources:
     username: ((credentials.docker_user))
     password: ((credentials.docker_password))
     repository: anaikdocker/slackbot
+
+- name: notify
+  type: slack-notifier
+  source:
+    url: https://hooks.slack.com/services/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
