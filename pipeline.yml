@@ -6,6 +6,7 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
+  - get: data
   - put: datetime-version
   - put: docker-image
     params:
@@ -37,9 +38,11 @@ jobs:
   - get: git-repo
     trigger: true
     passed:
-      - build-docker-image
+    - build-docker-image
   - get: data
     trigger: true
+    passed:
+    - build-docker-image
   - task: kubectl-apply
     config:
       platform: linux
