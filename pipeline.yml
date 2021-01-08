@@ -6,8 +6,6 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
-  - get: data
-    trigger: true
   - put: datetime-version
   - put: docker-image
     params:
@@ -33,22 +31,11 @@ jobs:
           cat data/version
       outputs:
       - name: data
-
-- name: update-deployment
-  plan:
-  - get: git-repo
-    trigger: true
-    passed:
-    - build-docker-image
-  - get: data
-    trigger: true
-    passed:
-    - build-docker-image
   - task: kubectl-apply
     config:
       platform: linux
       inputs:
-      - name: data
+      - name: datetime-version
       - name: git-repo
       image_resource:
         type: registry-image
@@ -65,26 +52,22 @@ jobs:
         - -c
         - |
           ls -l
-          image_version=$(cat data/version)
+          image_version=$(cat datetime-version/version)
           echo $image_version
-          sed -i 's/image_version/${image_version}/g' git-repo/k8s/deploy.yaml
-          sed -i 's/kube_api_server_uri/${kube_api_server_uri}/g' git-repo/k8s/kubeconfig.yaml
-          sed -i 's/kube_api_token/${kube_api_token}/g' git-repo/k8s/kubeconfig.yaml
+          sed -i 's@image_version@'"$image_version"'@' git-repo/k8s/deploy.yaml
+          sed -i 's@kube_api_token@'"$kube_api_token"'@' git-repo/k8s/kubeconfig.yaml
+          sed -i 's@kube_api_server_uri@'"$kube_api_server_uri"'@' git-repo/k8s/kubeconfig.yaml
           mkdir -p ~/.kube
           cp git-repo/k8s/kubeconfig.yaml ~/.kube/config
+          cat  git-repo/k8s/kubeconfig.yaml
           kubectl apply -f git-repo/k8s/deploy.yaml
-      outputs:
-        - name: files
 
 resource_types:
 - name: datetime-version
   type: registry-image
   source:
     repository: dcsg/datetime-version-resource
-- name: keyval
-  type: docker-image
-  source:
-      repository: moredhel/keyval-resource
+
 
 resources:
 - name: datetime-version
@@ -110,7 +93,3 @@ resources:
     username: ((credentials.docker_user))
     password: ((credentials.docker_password))
     repository: anaikdocker/slackbot
-
-- name: data
-  type: keyval
-  icon: database
