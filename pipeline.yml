@@ -25,9 +25,9 @@ jobs:
         path: sh
         args:
         - -exc
-        - ls -la; cat $version > ./files/version
+        - ls -la; cat $version > data/version
       outputs:
-        - name: files
+      - name: data
 
 - name: update-deployment
   plan:
@@ -35,19 +35,19 @@ jobs:
     trigger: true
     passed:
       - build-docker-image
-  - get: datetime-version
+  - get: data
   - task: kubectl-apply
     config:
       platform: linux
       inputs:
-      - name: datetime-version
+      - name: data
       image_resource:
         type: registry-image
         source: 
           repository: alpine/k8s 
           tag: 1.14.9
       params:
-        version: datetime-version/version
+        version: files/version
         kube_api_server_uri: ((credentials.kube_api_server_uri))
         kube_api_token: ((credentials.kube_api_token))
       run:
@@ -55,7 +55,7 @@ jobs:
         args:
         - -c
         - |
-          image_version=$(cat $version)
+          image_version=$(cat data/version)
           sed -i 's/image_version/${image_version}/g' git-repo/k8s/deploy.yaml
           sed -i 's/kube_api_server_uri/${kube_api_server_uri}/g' git-repo/k8s/kubeconfig.yaml
           sed -i 's/kube_api_token/${kube_api_token}/g' git-repo/k8s/kubeconfig.yaml
@@ -70,6 +70,10 @@ resource_types:
   type: registry-image
   source:
     repository: dcsg/datetime-version-resource
+- name: keyval
+  type: docker-image
+  source:
+      repository: swce/keyval-resource
 
 resources:
 - name: datetime-version
@@ -95,3 +99,7 @@ resources:
     username: ((credentials.docker_user))
     password: ((credentials.docker_password))
     repository: anaikdocker/slackbot
+
+- name: data
+  type: keyval
+  icon: database
