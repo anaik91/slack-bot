@@ -1,5 +1,6 @@
 import os
 import logging
+import requests
 from flask import Flask , jsonify
 from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
@@ -55,7 +56,8 @@ def app_mention(payload):
     elif command_text == 'run':
         process(channel_id,blocks=get_run(user))
     elif command_text == 'random':
-        process(channel_id,blocks=get_random_post(user))
+        activity = requests.get("http://www.boredapi.com/api/activity/").json()
+        process(channel_id,blocks=get_random_post(user,activity['activity'],activity['type'],activity['participants']))
     else:
         process(channel_id,text=command_text)
 

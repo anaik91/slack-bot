@@ -10,18 +10,28 @@ def get_run(user):
 	]
     return block
 
-def get_random_post(user):
+def get_random_post(user,task,type,participants):
     block =  [
 		{
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Hi <@{}> :innocent: \nThe Lorem Ipsum for photos.".format(user)
-			},
-			"accessory": {
-				"type": "image",
-				"image_url": "https://picsum.photos/200/300",
-				"alt_text": "photo"
+				"text": "Hi <@{}> , Here is an activity for you".format(user)
+			}
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Task Details:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• task : {} \n • type : {}\n • participants : {}".format(task,type,participants)
 			}
 		}
 	]
