@@ -29,7 +29,7 @@ spec:
   selector:
     matchLabels:
       app: python-slack-bot
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:

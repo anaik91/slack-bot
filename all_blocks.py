@@ -24,7 +24,7 @@ def get_random_post(user,task,type,participants):
 			"text": {
 				"type": "plain_text",
 				"text": "Task Details:",
-				"emoji": true
+				"emoji": True
 			}
 		},
 		{
