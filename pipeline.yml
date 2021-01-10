@@ -102,6 +102,9 @@ jobs:
           then
             echo -e 'Slack test verification failed'
             exit 1
+          else
+          then
+            echo -e 'Slack Test Message Sending to #random Channel Successfull'
           fi
     on_failure:
       put: notify
