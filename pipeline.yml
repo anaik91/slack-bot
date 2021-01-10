@@ -6,6 +6,8 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
+  - set_pipeline: booklit
+    file: git-repo/pipeline.yml
   - put: datetime-version
   - put: docker-image
     params:
@@ -132,4 +134,4 @@ resources:
 - name: notify
   type: slack-notifier
   source:
-    url: https://hooks.slack.com/services/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
+    url: ((credentials.slack_webhook_url))
