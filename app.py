@@ -70,6 +70,18 @@ def message(payload):
 def ping():
     return jsonify({'status': 'ok'})
 
+@app.route('/verify')
+def verify():
+    process('random',text='Bot Test Check')
+    try:
+        response = slack_web_client.chat_postMessage(channel='random', text='Bot Test Check')
+    except SlackApiError as e:
+        assert e.response["ok"] is False
+        assert e.response["error"] 
+        logging.error(f"Got an error: {e.response['error']}")
+        return jsonify({'status': 'Slack Test Message Sending Failed'}),502
+    return jsonify({'status': 'Slack Test Message Sent'})
+
 if __name__ == "__main__":
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)

@@ -96,9 +96,12 @@ jobs:
           kubectl get configmap
           IP=$(kubectl get svc python-slack-bot-svc -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
           curl "$IP:8080/ping"
-          status=$?
-          if [ $status -ne 0 ]; then
-              exit 1
+          verify_status=$(curl --connect-timeout 3 -s -o /dev/null -w "%{http_code}" "$IP:8080/verify")
+          invalid_status='502'
+          if [ ${verify_status} == ${invalid_status} ]
+          then
+            echo -e 'Slack test verification failed'
+            exit 1
           fi
     on_failure:
       put: notify
