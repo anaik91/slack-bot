@@ -6,7 +6,7 @@ jobs:
   plan:
   - get: git-repo
     trigger: true
-  - set_pipeline: booklit
+  - set_pipeline: bot-pipeline
     file: git-repo/pipeline.yml
   - put: datetime-version
   - put: docker-image
