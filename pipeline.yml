@@ -42,6 +42,18 @@ jobs:
           mkdir -p ~/.kube
           cp git-repo/k8s/kubeconfig.yaml ~/.kube/config
           kubectl apply -f git-repo/k8s/deploy.yaml
+    on_failure:
+      put: notify
+      params:
+        message: Bot build Failed
+        mode: concise
+        alert_type: failed
+    on_success:
+      put: notify
+      params:
+        message: Bot build Successfull
+        mode: concise
+        alert_type: success
 
 - name: verify-deployment
   public: true
@@ -87,13 +99,13 @@ jobs:
     on_failure:
       put: notify
       params:
-        message: Bot Health Verification Failed 
+        message: Bot Health Verification Failed
         mode: concise
         alert_type: failed
     on_success:
       put: notify
       params:
-        message: Bot Build and Health Verification Successfull 
+        message: Bot Health Verification Successfull
         mode: concise
         alert_type: success
 resource_types:
