@@ -28,6 +28,8 @@ jobs:
         version: files/version
         kube_api_server_uri: ((credentials.kube_api_server_uri))
         kube_api_token: ((credentials.kube_api_token))
+        slack_bot_token: ((credentials.slack_bot_token))
+        slack_signing_secret: ((credentials.slack_signing_secret))
       run:
         path: /bin/sh
         args:
@@ -37,6 +39,8 @@ jobs:
           image_version=$(cat datetime-version/version)
           echo $image_version
           sed -i 's@image_version@'"$image_version"'@' git-repo/k8s/deploy.yaml
+          sed -i 's@SLACK_SIGNING_SECRET_DATA@'"$slack_signing_secret"'@' git-repo/k8s/deploy.yaml
+          sed -i 's@SLACK_BOT_TOKEN_DATA@'"$slack_bot_token"'@' git-repo/k8s/deploy.yaml
           sed -i 's@kube_api_token@'"$kube_api_token"'@' git-repo/k8s/kubeconfig.yaml
           sed -i 's@kube_api_server_uri@'"$kube_api_server_uri"'@' git-repo/k8s/kubeconfig.yaml
           mkdir -p ~/.kube
