@@ -1,0 +1,864 @@
+{
+  "install": {
+    "cs": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Cassandra Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p c -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/adding-cassandra-nodes",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+
+    "zk": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Zookeeper Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper setup -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/adding-zookeeper-nodes",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ms": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Management Server Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-server setup -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ui": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Edge UI Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p ue -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ld": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Ldap Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p ld -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "pg": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Postgres Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p ps -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "rr": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Router Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p r -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+
+    "mp": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Message Processor Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-setup/bin/setup.sh -p mp -f ConfigFile`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`*ConfigFile*` to be replaced with the actual configfile"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.18.05/install-edge-components-node",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+
+    "mo": [{
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Monit Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-monit install` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit configure` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit start`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/apigee-monit",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ]
+
+  },
+  "uninstall": {
+    "cs": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Cassandra UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "zk": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Zookeeper UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ms": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Management Server UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-server uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ui": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Edge UI UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-ui uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ld": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "LDAP UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "pg": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Postgres UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql uninstall`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "rr": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Router UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-router uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "mp": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Message Processor UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-message-processor uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "mo": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Monit UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-monit uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ]
+  },
+  "service": {
+    "cs": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Cassandra Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+
+    "zk": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Zookeeper Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ms": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Management Server Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "ui": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Edge UI Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-ui start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-ui restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ]
+
+  }
+}
