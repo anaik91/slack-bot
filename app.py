@@ -1,18 +1,16 @@
 import os
 import logging
-import requests
 from flask import Flask , jsonify
 from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack_sdk.errors import SlackApiError
-from all_blocks import get_help , get_random_post , get_run
-
+from config import Config
 # Initialize a Flask app to host the events adapter
 app = Flask(__name__)
-slack_events_adapter = SlackEventAdapter(os.environ["SLACK_SIGNING_SECRET"], "/slack/events", app)
+slack_events_adapter = SlackEventAdapter(Config.SLACK_SIGNING_SECRET, "/slack/events", app)
 
 # Initialize a Web API client
-slack_web_client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
+slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
 
 def process(channel,text=None,blocks=None):
     try:
@@ -41,25 +39,16 @@ def app_mention(payload):
         rich_text_elements = [ each_block['elements'][0]['elements'] for each_block in blocks if each_block['type'] == 'rich_text' ][0]
         command_data=rich_text_elements[-1]
         if command_data['type'] == 'user':
-            process(channel_id,blocks=get_help(user))
+            command_text='help'
             return True
         else:
             command_text=command_data['text'].strip()
     except (KeyError,IndexError):
-        process(channel_id,blocks=get_help(user))
-        return True
+        command_text='help'
     logging.info(event)
-    if command_text == 'help':
-        process(channel_id,blocks=get_help(user))
-    elif command_text == 'version':
-        process(channel_id,text='Version : 1.0.0')
-    elif command_text == 'run':
-        process(channel_id,blocks=get_run(user))
-    elif command_text == 'random':
-        activity = requests.get("http://www.boredapi.com/api/activity/").json()
-        process(channel_id,blocks=get_random_post(user,activity['activity'],activity['type'],activity['participants']))
-    else:
-        process(channel_id,text=command_text)
+    from message_controller import messageHandler
+    m=messageHandler(command_text,user)
+    process(channel_id,blocks=m.getBlock())
 
 @slack_events_adapter.on("message")
 def message(payload):
@@ -80,6 +69,7 @@ def verify():
         assert e.response["error"] 
         logging.error(f"Got an error: {e.response['error']}")
         return jsonify({'status': 'Slack Test Message Sending Failed'}),502
+        
     return jsonify({'status': 'Slack Test Message Sent'})
 
 if __name__ == "__main__":
