@@ -65,3 +65,13 @@ spec:
             configMapKeyRef:
               name: slack-bot-env-file
               key: SLACK_BOT_TOKEN
+        - name: RUNDECK_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: slack-bot-env-file
+              key: RUNDECK_API_URL
+        - name: RUNDECK_API_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: slack-bot-env-file
+              key: RUNDECK_API_TOKEN
