@@ -47,6 +47,7 @@ def app_mention(payload):
         command_text='help'
     logging.info(event)
     from message_controller import messageHandler
+    logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user)
     process(channel_id,blocks=m.getBlock())
 

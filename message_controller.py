@@ -1,14 +1,14 @@
 import shlex
-import os
 from all_blocks import *
 from rundeck_controller import rundeck
 from flask import current_app
+import logging
 
 class messageHandler:
 
     def __init__(self,message,user) -> None:
         self.user=user
-        self.message=shlex.split(message)
+        self.message=message
 
     def isValidMessage(self):
         if len(self.message) < 2:
@@ -23,11 +23,13 @@ class messageHandler:
             return get_help(self.user)
         if not self.isValidMessage(self):
             return get_run_help(self.user)
-        if self.message == 'run':
+        message=shlex.split(self.message)
+        if message[0] == 'run':
             return self.getRunBlock(self)
-        if self.message == 'doc':
+        if message[0] == 'doc':
             return self.getDocBlock(self)
-
+        return get_help(self.user)
+        
     def getRunBlock(self):
         verb1 = self.message[1]
         r = rundeck(current_app.config['RUNDECK_API_URL'],current_app.config['RUNDECK_API_TOKEN'])
