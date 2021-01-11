@@ -22,12 +22,12 @@ class messageHandler:
         if self.message == 'help':
             return get_help(self.user)
         self.message=shlex.split(self.message)
-        if not self.isValidMessage(self):
+        if not self.isValidMessage():
             return get_run_help(self.user)
         if self.message[0] == 'run':
-            return self.getRunBlock(self)
+            return self.getRunBlock()
         if self.message[0] == 'doc':
-            return self.getDocBlock(self)
+            return self.getDocBlock()
         return get_help(self.user)
 
     def getRunBlock(self):
