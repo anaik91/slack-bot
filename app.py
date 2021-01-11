@@ -1,4 +1,3 @@
-import os
 import logging
 from flask import Flask , jsonify
 from slack_sdk.web import WebClient
@@ -48,7 +47,7 @@ def app_mention(payload):
         command_text='help'
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
-    m=messageHandler(command_text,user)
+    m=messageHandler(command_text,user,channel_id)
     process(channel_id,blocks=m.getBlock())
 
 @slack_events_adapter.on("message")
@@ -70,7 +69,6 @@ def verify():
         assert e.response["error"] 
         logging.error(f"Got an error: {e.response['error']}")
         return jsonify({'status': 'Slack Test Message Sending Failed'}),502
-        
     return jsonify({'status': 'Slack Test Message Sent'})
 
 if __name__ == "__main__":

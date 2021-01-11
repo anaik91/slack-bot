@@ -133,16 +133,27 @@ def get_error(user,message):
         ]
     return block
 
-def get_command(command,output):
-    block = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "Command `{}`Output \n```{}```".format(command,output)
+def get_command(command,status,output):
+    if status:
+        block = [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Command: `{}` Run Success \n```{}```".format(command,output)
+                    }
                 }
-            }
-        ]
+            ]
+    else:
+        block = [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Command: `{}` Run Failure \n```{}```".format(command,output)
+                    }
+                }
+            ]
     return block
 
 def generic_list(data):
@@ -164,6 +175,18 @@ def generic_info(data):
                 "text": {
                     "type": "mrkdwn",
                     "text": data
+                }
+            }
+        ]
+    return block
+
+def get_running_command(command):
+    block = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Running Command `{}` :loading:".format(command)
                 }
             }
         ]

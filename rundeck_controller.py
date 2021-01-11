@@ -1,3 +1,4 @@
+from time import sleep
 import requests
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -77,13 +78,39 @@ class rundeck:
         else:
             return 'Error'
     
-    def getJobOutput(self,jobId):
-        url = '{}/execution/{}/output'.format(self.baseUrl,jobId)
+    def getJobState(self,jobId):
+        url = '{}/execution/{}/state'.format(self.baseUrl,jobId)
         response=requests.get(url,headers=self.headers,verify=False)
         if response.status_code == 200:
             output = response.json()
-            entries = output['entries']
-            #'\n'.join([ i['log'] for i in entries ])
-            return entries
+            executionState = output['executionState']
+            completed = output['completed']
+            if completed:
+                return True,executionState
+            else:
+                return False,None
+        else:
+            return False,None
+    
+    def getJobOutputText(self,jobId):
+        url = '{}/execution/{}/output?format=text'.format(self.baseUrl,jobId)
+        response=requests.get(url,headers=self.headers,verify=False)
+        if response.status_code == 200:
+            output = response.text
+            return output
         else:
             return []
+    
+    def waitForJob(self,jobId):
+        completed,state=self.getJobState(jobId)
+        while not completed:
+            completed,state=self.getJobState(jobId)
+            sleep(1)
+        outputText=self.getJobOutputText(jobId)
+        if state == 'SUCCEEDED':
+            return True,outputText
+        elif state == 'FAILED':
+            return False,outputText
+        else:
+            return False,outputText
+            
