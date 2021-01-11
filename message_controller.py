@@ -21,9 +21,9 @@ class messageHandler:
             return get_version()
         if self.message == 'help':
             return get_help(self.user)
+        self.message=shlex.split(self.message)
         if not self.isValidMessage(self):
             return get_run_help(self.user)
-        self.message=shlex.split(self.message)
         if self.message[0] == 'run':
             return self.getRunBlock(self)
         if self.message[0] == 'doc':
