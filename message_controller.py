@@ -23,13 +23,13 @@ class messageHandler:
             return get_help(self.user)
         if not self.isValidMessage(self):
             return get_run_help(self.user)
-        message=shlex.split(self.message)
-        if message[0] == 'run':
+        self.message=shlex.split(self.message)
+        if self.message[0] == 'run':
             return self.getRunBlock(self)
-        if message[0] == 'doc':
+        if self.message[0] == 'doc':
             return self.getDocBlock(self)
         return get_help(self.user)
-        
+
     def getRunBlock(self):
         verb1 = self.message[1]
         r = rundeck(current_app.config['RUNDECK_API_URL'],current_app.config['RUNDECK_API_TOKEN'])
