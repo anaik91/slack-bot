@@ -5,6 +5,7 @@ from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
 from slack_sdk.errors import SlackApiError
 from config import Config
+from message_controller import messageHandler
 # Initialize a Flask app to host the events adapter
 app = Flask(__name__)
 slack_events_adapter = SlackEventAdapter(Config.SLACK_SIGNING_SECRET, "/slack/events", app)
@@ -46,7 +47,6 @@ def app_mention(payload):
     except (KeyError,IndexError):
         command_text='help'
     logging.info(event)
-    from message_controller import messageHandler
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user)
     process(channel_id,blocks=m.getBlock())

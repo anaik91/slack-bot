@@ -151,7 +151,7 @@ def generic_list(data):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "{}".format("\n".join(data))
+                    "text": "* {}".format("\n* ".join(data))
                 }
             }
         ]
