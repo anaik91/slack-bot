@@ -22,6 +22,10 @@ class messageHandler:
         self.user=user
         self.message=message
         self.channel=channel
+        if message == 'version' or message == 'help':
+            self.async=False
+        else:
+            self.async=True
 
     def isValidMessage(self):
         if len(self.message) < 2:
@@ -34,7 +38,6 @@ class messageHandler:
             return get_version()
         if self.message == 'help':
             return get_help(self.user)
-        process_slack_response(self.channel,text='Processing ...')
         self.message=shlex.split(self.message)
         if not self.isValidMessage():
             return get_run_help(self.user)

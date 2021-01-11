@@ -49,6 +49,8 @@ def app_mention(payload):
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user,channel_id)
+    if m.async:
+        process(channel_id,text='Processing ...')
     process(channel_id,blocks=m.getBlock())
 
 @slack_events_adapter.on("message")
