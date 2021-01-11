@@ -23,9 +23,9 @@ class messageHandler:
         self.message=message
         self.channel=channel
         if message == 'version' or message == 'help':
-            self.async=False
+            self.is_async=False
         else:
-            self.async=True
+            self.is_async=True
 
     def isValidMessage(self):
         if len(self.message) < 2:
