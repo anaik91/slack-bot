@@ -34,6 +34,7 @@ class messageHandler:
             return get_version()
         if self.message == 'help':
             return get_help(self.user)
+        process_slack_response(self.channel,text='Processing ...')
         self.message=shlex.split(self.message)
         if not self.isValidMessage():
             return get_run_help(self.user)
@@ -58,9 +59,6 @@ class messageHandler:
             verb2 = self.message[2]
             if verb1 == 'ln':
                 return generic_list(r.listNodes(verb2))
-            # elif verb1 == 'getjob':
-            #     output=r.getJobOutput(verb2)
-            #     return get_command('Command','\n'.join([ i['log'] for i in output ]))
             else :
                 return get_run_help(self.user)
         if len(self.message) > 3:
