@@ -51,6 +51,12 @@ class messageHandler:
         if len(self.message) == 2:
             if verb1 == 'lp':
                 return generic_list(r.listProjects())
+            if verb1 == 'lpns':
+                ps=r.listProjects()
+                servers=[]
+                for ep in ps:
+                    servers.extend([ '{}#{}'.format(ep,i) for i in r.listNodes(ep)])
+                return servers
             else :
                 return get_run_help(self.user)
         if len(self.message) == 3:

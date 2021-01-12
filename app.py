@@ -142,6 +142,18 @@ def doctest(component,subcommand):
 def slack_events():
     return handler.handle(request)
 
+@flask_app.route("/slack/options", methods=["POST"])
+def slack_option_list():
+    m=messageHandler('run lpns','user','user')
+    response = [{
+      "text": {
+        "type": "plain_text",
+        "text": "*{}*".format(i)
+      },
+      "value": i
+    } for i in m.getBlock()] 
+    return jsonify({ "options": response })
+
 @flask_app.route('/ping')
 def ping():
     return jsonify({'status': 'ok'})
