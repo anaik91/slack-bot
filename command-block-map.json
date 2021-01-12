@@ -858,6 +858,113 @@
       {
         "type": "divider"
       }
+    ],
+    "ld": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "LDAP Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "pg": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Postgres Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "plain_text",
+          "text": "apigee-postgresql",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql wait_for_ready`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "plain_text",
+          "text": "edge-postgres-server",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "rr": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Router Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-router start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-router restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "mp": [{
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Message Processor Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
     ]
 
   }
