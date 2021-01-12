@@ -3,6 +3,8 @@ RUN apt-get update && apt-get install -y python3-tk
 RUN mkdir -p /slackbot
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
+COPY --from=builder /usr/local/lib/ /usr/local/lib/
 COPY . /slackbot
 EXPOSE 8080
 WORKDIR /slackbot
