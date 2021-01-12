@@ -122,12 +122,13 @@ def open_modal(ack, shortcut, client):
 @app.view("run_cmd_view")
 def handle_submission(ack, body, client,say, view):
     ack()
+    user = body["user"]["id"]
     node_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_ip' ][0]
     command_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_command' ][0]
     node_value=view["state"]["values"][node_block]['node_ip']['selected_option']['value']
     command_value=view["state"]["values"][command_block]["node_command"]['value']
     m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),'user','channel_id')
-    say(blocks=m.getBlock())
+    say(channel=user,blocks=m.getBlock())
 
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)
