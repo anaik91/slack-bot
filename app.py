@@ -62,50 +62,25 @@ def open_modal(ack, shortcut, client):
                     "type": "divider"
                 },
                 {
-                    "type": "input",
-                    "element": {
-                        "type": "static_select",
+                    "type": "section",
+                    "block_id": "node_ip",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Pick a Server from the list"
+                    },
+                    "accessory": {
+                        "action_id": "node_ip",
+                        "type": "external_select",
                         "placeholder": {
                             "type": "plain_text",
-                            "text": "Select an item",
-                            "emoji": True
+                            "text": "Select an item"
                         },
-                        "options": [
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "EU10-DEMO#192.168.12.138",
-                                    "emoji": True
-                                },
-                                "value": "EU10-DEMO#192.168.12.138"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "EU10-DEMO#192.168.12.116",
-                                    "emoji": True
-                                },
-                                "value": "EU10-DEMO#192.168.12.116"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "EU10-DEMO#192.168.12.150",
-                                    "emoji": True
-                                },
-                                "value": "EU10-DEMO#192.168.12.150"
-                            }
-                        ],
-                        "action_id": "node_ip"
-                    },
-                    "label": {
-                        "type": "plain_text",
-                        "text": "Choose Server",
-                        "emoji": True
+                        "min_query_length": 2
                     }
                 },
                 {
                     "type": "input",
+                    "block_id": "node_command",
                     "element": {
                         "type": "plain_text_input",
                         "action_id": "node_command"
@@ -123,10 +98,10 @@ def open_modal(ack, shortcut, client):
 def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
-    node_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_ip' ][0]
-    command_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_command' ][0]
-    node_value=view["state"]["values"][node_block]['node_ip']['selected_option']['value']
-    command_value=view["state"]["values"][command_block]["node_command"]['value']
+    #node_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_ip' ][0]
+    #command_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_command' ][0]
+    node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
+    command_value=view["state"]["values"]['node_command']["node_command"]['value']
     m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,user)
     say(channel=user,blocks=m.getBlock())
 
