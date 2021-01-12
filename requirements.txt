@@ -3,4 +3,4 @@ slackeventsapi>=2.1.0
 Flask>=1.1.1
 certifi
 requests==2.24.0
-slack_bolt
+slack-bolt==1.1.5

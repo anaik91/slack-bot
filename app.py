@@ -1,39 +1,22 @@
 import logging
-import threading
-from flask import Flask , jsonify
-from slack_sdk.web import WebClient
-from slackeventsapi import SlackEventAdapter
-from slack_sdk.errors import SlackApiError
+from slack_bolt import App
+from flask import Flask, request ,jsonify
+from slack_bolt.adapter.flask import SlackRequestHandler
 from config import Config
 from message_controller import messageHandler
 from all_blocks import get_blocks_from_file
-# Initialize a Flask app to host the events adapter
-app = Flask(__name__)
-app.doc_blocks=get_blocks_from_file(Config.DOC_FILE)
-slack_events_adapter = SlackEventAdapter(Config.SLACK_SIGNING_SECRET, "/slack/events", app)
+logging.basicConfig(level=logging.DEBUG)
+app = App()
 
-# Initialize a Web API client
-slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
+@app.event("reaction_added")
+def foo(say):
+    say("I Like It !!")
 
-def process(channel,text,blocks):
-    try:
-        response = slack_web_client.chat_postMessage(channel=channel, text=text,blocks=blocks)
-        assert response["ok"]
-    except SlackApiError as e:
-        assert e.response["ok"] is False
-        assert e.response["error"] 
-        logging.error(f"Got an error: {e.response['error']}")
-
-@slack_events_adapter.on("reaction_added")
-def update_emoji(payload):
-    event = payload.get("event", {})
-    logging.info(event)
-    channel_id = event['item']['channel']
-    process(channel_id,'I like the Emoji. Kudos !!',None)
-
-@slack_events_adapter.on("app_mention")
-def app_mention(payload):
-    event = payload.get("event", {})
+@app.event("app_mention")
+def event_test(body, say, ack,logger):
+    ack('ack')
+    logger.info(body)
+    event = body.get("event", {})
     user = event.get("user")
     channel_id = event.get("channel")
     blocks = event.get("blocks")
@@ -50,37 +33,19 @@ def app_mention(payload):
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user,channel_id)
-    threading.Thread(target=process, args=(channel_id,None,m.getBlock())).start()
-    return 'HTTP 200 OK'
+    say(blocks=m.getBlock())
 
-@slack_events_adapter.on("message")
-def message(payload):
-    event = payload.get("event", {})
-    logging.info(event)
+flask_app = Flask(__name__)
+flask_app.doc_blocks=get_blocks_from_file(Config.DOC_FILE)
+handler = SlackRequestHandler(app)
 
-@app.route('/doctest/<component>/<subcommand>')
-def doctest(component,subcommand):
-    m=messageHandler('doc {} {}'.format(component,subcommand),'user','channel_id')
-    return jsonify({'status': m.getBlock()})
+@flask_app.route("/slack/events", methods=["POST"])
+def slack_events():
+    return handler.handle(request)
 
-@app.route('/ping')
+@flask_app.route('/ping')
 def ping():
     return jsonify({'status': 'ok'})
 
-@app.route('/verify')
-def verify():
-    process('random',text='Bot Test Check')
-    try:
-        response = slack_web_client.chat_postMessage(channel='random', text='Bot Test Check')
-    except SlackApiError as e:
-        assert e.response["ok"] is False
-        assert e.response["error"] 
-        logging.error(f"Got an error: {e.response['error']}")
-        return jsonify({'status': 'Slack Test Message Sending Failed'}),502
-    return jsonify({'status': 'Slack Test Message Sent'})
-
-if __name__ == "__main__":
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
-    logger.addHandler(logging.StreamHandler())
-    app.run(host='0.0.0.0',port=8080)
+if __name__ == '__main__':
+    flask_app.run(host='0.0.0.0',port=8080)

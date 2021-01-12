@@ -6,5 +6,6 @@ RUN pip install -r /requirements.txt
 COPY . /slackbot
 EXPOSE 8080
 WORKDIR /slackbot
-ENTRYPOINT ["python"]
-CMD ["bolt_app.py"]
+#ENTRYPOINT ["python"]
+#CMD ["app.py"]
+ENTRYPOINT gunicorn --bind :8080 --workers 2 --threads 2 --timeout 0 main:flask_app
