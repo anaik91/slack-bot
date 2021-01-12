@@ -50,8 +50,8 @@ def app_mention(payload):
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user,channel_id)
-    t1 = threading.Thread(target=process, args=(channel_id,None,m.getBlock()))
-    t1.start()
+    threading.Thread(target=process, args=(channel_id,None,m.getBlock())).start()
+    return 'HTTP 200 OK'
 
 @slack_events_adapter.on("message")
 def message(payload):
