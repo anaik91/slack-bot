@@ -7,4 +7,4 @@ COPY . /slackbot
 EXPOSE 8080
 WORKDIR /slackbot
 ENTRYPOINT ["python"]
-CMD ["app.py"]
+CMD ["bolt_app.py"]
