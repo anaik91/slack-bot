@@ -25,11 +25,9 @@ def process(channel,text,blocks):
 @slack_events_adapter.on("reaction_added")
 def update_emoji(payload):
     event = payload.get("event", {})
-    user = event.get("user")
     logging.info(event)
     channel_id = event['item']['channel']
-    command_text = 'I like the Emoji. Kudos !!'
-    process(channel_id,text=command_text)
+    process(channel_id,'I like the Emoji. Kudos !!',None)
 
 @slack_events_adapter.on("app_mention")
 def app_mention(payload):
