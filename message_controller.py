@@ -5,7 +5,6 @@ from slack_sdk.errors import SlackApiError
 from all_blocks import *
 from rundeck_controller import rundeck
 from config import Config
-from flask import current_app
 
 def process_slack_response(channel,text=None,blocks=None):
     slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
@@ -78,7 +77,7 @@ class messageHandler:
             return get_run_help(self.user)
     
     def getDocBlock(self):
-        blocks=current_app.doc_blocks
+        blocks=get_blocks_from_file(Config.DOC_FILE)
         sub_command=list(blocks.keys())
         component=list(blocks[sub_command[0]].keys())
         if len(self.message)==1:

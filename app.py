@@ -4,7 +4,6 @@ from flask import Flask, request ,jsonify
 from slack_bolt.adapter.flask import SlackRequestHandler
 from config import Config
 from message_controller import messageHandler
-from all_blocks import get_blocks_from_file
 logging.basicConfig(level=logging.DEBUG)
 app = App()
 
@@ -13,7 +12,7 @@ def foo(say):
     say("I Like It !!")
 
 @app.event("app_mention")
-def event_test(body, say, ack,logger):
+def event_test(body,say, ack,logger):
     ack('ack')
     logger.info(body)
     event = body.get("event", {})
@@ -36,8 +35,12 @@ def event_test(body, say, ack,logger):
     say(blocks=m.getBlock())
 
 flask_app = Flask(__name__)
-flask_app.doc_blocks=get_blocks_from_file(Config.DOC_FILE)
 handler = SlackRequestHandler(app)
+
+@flask_app.route('/doctest/<component>/<subcommand>')
+def doctest(component,subcommand):
+    m=messageHandler('doc {} {}'.format(component,subcommand),'user','channel_id')
+    return jsonify({'status': m.getBlock()})
 
 @flask_app.route("/slack/events", methods=["POST"])
 def slack_events():
