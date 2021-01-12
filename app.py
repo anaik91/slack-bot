@@ -1,4 +1,5 @@
 import logging
+import threading
 from flask import Flask , jsonify
 from slack_sdk.web import WebClient
 from slackeventsapi import SlackEventAdapter
@@ -49,9 +50,8 @@ def app_mention(payload):
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user,channel_id)
-    if m.is_async:
-        process(channel_id,text='Processing ...')
-    process(channel_id,blocks=m.getBlock())
+    t1 = threading.Thread(target=process, args=(channel_id),kwargs={'blocks':m.getBlock()})
+    t1.start()
 
 @slack_events_adapter.on("message")
 def message(payload):
