@@ -73,26 +73,26 @@ def open_modal(ack, shortcut, client):
                             {
                                 "text": {
                                     "type": "plain_text",
-                                    "text": "EU10#192.168.1.1",
+                                    "text": "EU10-DEMO#192.168.12.138",
                                     "emoji": True
                                 },
-                                "value": "value-0"
+                                "value": "EU10-DEMO#192.168.12.138"
                             },
                             {
                                 "text": {
                                     "type": "plain_text",
-                                    "text": "EU10#192.168.1.2",
+                                    "text": "EU10-DEMO#192.168.12.116",
                                     "emoji": True
                                 },
-                                "value": "value-1"
+                                "value": "EU10-DEMO#192.168.12.116"
                             },
                             {
                                 "text": {
                                     "type": "plain_text",
-                                    "text": "EU10#192.168.1.3",
+                                    "text": "EU10-DEMO#192.168.12.150",
                                     "emoji": True
                                 },
-                                "value": "value-2"
+                                "value": "EU10-DEMO#192.168.12.150"
                             }
                         ],
                         "action_id": "node_ip"
@@ -117,6 +117,16 @@ def open_modal(ack, shortcut, client):
                 }
             ]
         })
+
+@app.view("view_1")
+def handle_submission(ack, body, client,say, view):
+    ack()
+    node_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_ip' ][0]
+    command_block=[ each_block['block_id'] for each_block in view['blocks'] if each_block['type'] == 'input' and each_block['element']['action_id'] == 'node_command' ][0]
+    node_value=view["state"]["values"][node_block]["node_ip"]['value']
+    command_value=view["state"]["values"][command_block]["node_command"]['value']
+    m=messageHandler('run {} {}'.format(node_value.replace('#',' '),command_value),'user','channel_id')
+    say(blocks=m.getBlock())
 
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)
