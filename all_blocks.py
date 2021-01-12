@@ -1,3 +1,9 @@
+import json
+
+def get_blocks_from_file(file):
+    data=json.loads(open(file).read())
+    return data
+
 def get_version():
     block = [
 		{
@@ -96,7 +102,7 @@ def get_run_help(user):
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Below are the list of available *run* commands\n• run lp : *List Projects*\n • run ln : *List Nodes* \n • run rc <node> : *Run Command on a Node* \n • run getjob <jobid>  : *Get Output of a JOBID*"
+				"text": "Below are the list of available *run* commands\n• run lp \t\t\t\t\t\t\t\t\t\t: *List Projects*\n • run ln <project>    \t\t\t\t\t: *List Nodes* \n • run rc <node> <command> \t: *Run Command on a Node*"
 			}
 		}
         ]
@@ -191,3 +197,36 @@ def get_running_command(command):
             }
         ]
     return block
+
+def get_doc_help(user,component,sub_command):
+    help_block = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Hi <@{}> :wave:".format(user)
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Component*\n* ".format("\n* ".join(component))
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Sub-Command*\n* ".format("\n* ".join(sub_command))
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Syntax*:\n`doc <component> <subcommand>`\n*Example*\n`doc cs install` OR `doc ld service` "
+                }
+            }
+        ]
+    return help_block

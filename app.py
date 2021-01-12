@@ -6,8 +6,10 @@ from slackeventsapi import SlackEventAdapter
 from slack_sdk.errors import SlackApiError
 from config import Config
 from message_controller import messageHandler
+from all_blocks import get_blocks_from_file
 # Initialize a Flask app to host the events adapter
 app = Flask(__name__)
+app.doc_blocks=get_blocks_from_file(Config.DOC_FILE)
 slack_events_adapter = SlackEventAdapter(Config.SLACK_SIGNING_SECRET, "/slack/events", app)
 
 # Initialize a Web API client
@@ -55,6 +57,11 @@ def app_mention(payload):
 def message(payload):
     event = payload.get("event", {})
     logging.info(event)
+
+@app.route('/doctest/<component>/<subcommand>')
+def doctest(component,subcommand):
+    m=messageHandler('doc {} {}'.format(component,subcommand),'user','channel_id')
+    return jsonify({'status': m.getBlock()})
 
 @app.route('/ping')
 def ping():

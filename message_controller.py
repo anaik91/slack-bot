@@ -5,7 +5,7 @@ from slack_sdk.errors import SlackApiError
 from all_blocks import *
 from rundeck_controller import rundeck
 from config import Config
-# Initialize a Web API client
+from flask import current_app
 
 def process_slack_response(channel,text=None,blocks=None):
     slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
@@ -35,12 +35,12 @@ class messageHandler:
         if self.message == 'help':
             return get_help(self.user)
         self.message=shlex.split(self.message)
-        if not self.isValidMessage():
-            return get_run_help(self.user)
         if self.message[0] == 'run':
             return self.getRunBlock()
         if self.message[0] == 'doc':
             return self.getDocBlock()
+        if not self.isValidMessage():
+            return get_run_help(self.user)
         return get_help(self.user)
 
     def getRunBlock(self):
@@ -78,4 +78,24 @@ class messageHandler:
             return get_run_help(self.user)
     
     def getDocBlock(self):
-        return get_demo(self.user)
+        blocks=current_app.doc_blocks
+        sub_command=list(blocks.keys())
+        component=list(blocks[sub_command[0]].keys())
+        if len(self.message)==1:
+            return get_doc_help(self.user,component,sub_command)
+        if len(self.message)==2:
+            verb1 = self.message[1]
+            if verb1 not in component:
+                return get_doc_help(self.user,component,sub_command)
+            else:
+                sub_blocks =[]
+                [ sub_blocks.extend(j[verb1]) for i,j in blocks.items() ] 
+                return sub_blocks
+        if len(self.message)==3:
+            verb1 = self.message[1]
+            verb2 = self.message[2]
+            if verb1 not in component or verb2 not in sub_command:
+                return get_doc_help(self.user,component,sub_command)
+            else:
+                return blocks[verb2][verb1]
+        return get_doc_help(self.user,component,sub_command)
