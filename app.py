@@ -13,7 +13,7 @@ slack_events_adapter = SlackEventAdapter(Config.SLACK_SIGNING_SECRET, "/slack/ev
 # Initialize a Web API client
 slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
 
-def process(channel,text=None,blocks=None):
+def process(channel,text,blocks):
     try:
         response = slack_web_client.chat_postMessage(channel=channel, text=text,blocks=blocks)
         assert response["ok"]
@@ -50,7 +50,7 @@ def app_mention(payload):
     logging.info(event)
     logging.info('Command: {}'.format(command_text))
     m=messageHandler(command_text,user,channel_id)
-    t1 = threading.Thread(target=process, args=(channel_id),kwargs={'blocks':m.getBlock()})
+    t1 = threading.Thread(target=process, args=(channel_id,None,m.getBlock()))
     t1.start()
 
 @slack_events_adapter.on("message")
