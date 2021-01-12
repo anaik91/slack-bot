@@ -146,7 +146,7 @@ def get_command(command,status,output):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "Command: `{}` Run Success \n```{}```".format(command,output)
+                        "text": "Command: `{}` Run Success :gh-check-passed: \n```{}```".format(command,output)
                     }
                 }
             ]
@@ -156,7 +156,7 @@ def get_command(command,status,output):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "Command: `{}` Run Failure \n```{}```".format(command,output)
+                        "text": "Command: `{}` Run Failed :gh-check-failed: \n```{}```".format(command,output)
                     }
                 }
             ]
