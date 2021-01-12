@@ -1,6 +1,10 @@
 import logging
 from slack_bolt import App
-from time import sleep
+from flask import Flask, request ,jsonify
+from slack_bolt.adapter.flask import SlackRequestHandler
+from config import Config
+from message_controller import messageHandler
+from all_blocks import get_blocks_from_file
 logging.basicConfig(level=logging.DEBUG)
 app = App()
 
@@ -11,14 +15,28 @@ def foo(say):
 @app.event("app_mention")
 def event_test(body, say, ack,logger):
     ack('ack')
-    sleep(5)
     logger.info(body)
-    say("Hi from Google Cloud Functions!")
-
-from flask import Flask, request ,jsonify
-from slack_bolt.adapter.flask import SlackRequestHandler
+    event = body.get("event", {})
+    user = event.get("user")
+    channel_id = event.get("channel")
+    blocks = event.get("blocks")
+    try:
+        rich_text_elements = [ each_block['elements'][0]['elements'] for each_block in blocks if each_block['type'] == 'rich_text' ][0]
+        command_data=rich_text_elements[-1]
+        if command_data['type'] == 'user':
+            command_text='help'
+            return True
+        else:
+            command_text=command_data['text'].strip()
+    except (KeyError,IndexError):
+        command_text='help'
+    logging.info(event)
+    logging.info('Command: {}'.format(command_text))
+    m=messageHandler(command_text,user,channel_id)
+    say(blocks=m.getBlock())
 
 flask_app = Flask(__name__)
+flask_app.doc_blocks=get_blocks_from_file(Config.DOC_FILE)
 handler = SlackRequestHandler(app)
 
 @flask_app.route("/slack/events", methods=["POST"])
