@@ -211,14 +211,14 @@ def get_doc_help(user,component,sub_command):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*Component*\n* ".format("\n* ".join(component))
+                    "text": "*Component*\n* {}".format("\n* ".join(component))
                 }
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "*Sub-Command*\n* ".format("\n* ".join(sub_command))
+                    "text": "*Sub-Command*\n* {}".format("\n* ".join(sub_command))
                 }
             },
             {
