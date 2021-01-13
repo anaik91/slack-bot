@@ -12,7 +12,7 @@ docs-v2/.doctrees
 __pycache__/
 *.so
 *~
-
+async_flask.py
 # virtualenv
 env*/
 venv/

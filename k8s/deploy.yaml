@@ -5,6 +5,8 @@ metadata:
 data:
   SLACK_SIGNING_SECRET: SLACK_SIGNING_SECRET_DATA
   SLACK_BOT_TOKEN: SLACK_BOT_TOKEN_DATA
+  RUNDECK_API_URL: https://rundeck-latest-788718930.us-east-1.elb.amazonaws.com/api/36
+  RUNDECK_API_TOKEN: rZZhVXSad3w7VuSDHyVB802eVS75gy8a
 
 ---
 apiVersion: v1
@@ -63,3 +65,13 @@ spec:
             configMapKeyRef:
               name: slack-bot-env-file
               key: SLACK_BOT_TOKEN
+        - name: RUNDECK_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: slack-bot-env-file
+              key: RUNDECK_API_URL
+        - name: RUNDECK_API_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: slack-bot-env-file
+              key: RUNDECK_API_TOKEN
