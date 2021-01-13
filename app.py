@@ -114,7 +114,7 @@ def handle_submission(ack, body, client,say, view):
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
     command_value=view["state"]["values"]['node_command']["node_command"]['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
-    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,user)
+    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 flask_app = Flask(__name__)
