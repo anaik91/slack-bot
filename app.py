@@ -222,7 +222,10 @@ def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
-    command_value=view["state"]["values"]['node_command']["node_command"]['value']
+    if 'selected_option' not in view["state"]["values"]['node_command']["node_command"].keys():
+        command_value=view["state"]["values"]['node_command']["node_command"]['value']
+    else:
+        command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
     m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
