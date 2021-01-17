@@ -57,9 +57,129 @@ def open_modal(ack, shortcut, client):
                 "text": "Run Command Menu",
                 "emoji": True
             },
-            "blocks": [{
+            "blocks": [
+                {
                     "type": "divider"
-                }, {
+                },
+                {
+                    "type": "input",
+                    "block_id": "command_type",
+                    "element": {
+                        "type": "radio_buttons",
+                        "options": [
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "Pre-defined Commands",
+                                    "emoji": True
+                                },
+                                "value": "default"
+                            },
+                            {
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "Enter the Comand",
+                                    "emoji": True
+                                },
+                                "value": "custom"
+                            }
+                        ],
+                        "action_id": "command_type"
+                    },
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Run Type",
+                        "emoji": True
+                    }
+                }
+            ]
+        })
+
+@app.action("command_type")
+def custom_command(body,ack,shortcut, client):
+    ack()
+    channel=body['channel']['id']
+    command_type=view["state"]["values"]['command_type']['command_type']['selected_option']['value']
+    if command_type == 'default':
+        command_block={
+                "type": "input",
+                "block_id": "node_command",
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "node_command"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Command to Run",
+                    "emoji": true
+                }
+            }
+    else:
+        command_block={
+            "type": "section",
+            "block_id": "node_command",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Command to Run"
+            },
+            "accessory": {
+                "type": "static_select",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Select an item",
+                    "emoji": true
+                },
+                "options": [{
+                        "text": {
+                            "type": "plain_text",
+                            "text": "apigee-all status",
+                            "emoji": true
+                        },
+                        "value": "apigee-all status"
+                    }, {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "df -h",
+                            "emoji": true
+                        },
+                        "value": "df -h"
+                    }, {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "lsblk",
+                            "emoji": true
+                        },
+                        "value": "lsblk"
+                    }
+                ],
+                "action_id": "node_command"
+            }
+        }
+    client.views_open(
+        trigger_id=shortcut["trigger_id"],
+        view={
+            "type": "modal",
+            "callback_id": "custom_cmd_view",
+            "submit": {
+                "type": "plain_text",
+                "text": "Submit",
+                "emoji": true
+            },
+            "close": {
+                "type": "plain_text",
+                "text": "Cancel",
+                "emoji": true
+            },
+            "title": {
+                "type": "plain_text",
+                "text": "Run Command Menu",
+                "emoji": true
+            },
+            "blocks": [
+                {
+                    "type": "divider"
+                },
+                {
                     "type": "section",
                     "block_id": "node_ip",
                     "text": {
@@ -75,19 +195,9 @@ def open_modal(ack, shortcut, client):
                         },
                         "min_query_length": 2
                     }
-                }, {
-                    "type": "input",
-                    "block_id": "node_command",
-                    "element": {
-                        "type": "plain_text_input",
-                        "action_id": "node_command"
-                    },
-                    "label": {
-                        "type": "plain_text",
-                        "text": "Command to Run",
-                        "emoji": True
-                    }
-                }, {
+                },
+                command_block,
+                {
                     "type": "section",
                     "block_id": "channel_id",
                     "text": {
@@ -99,7 +209,7 @@ def open_modal(ack, shortcut, client):
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
-                            "emoji": True
+                            "emoji": true
                         },
                         "action_id": "channel_id"
                     }
@@ -107,7 +217,8 @@ def open_modal(ack, shortcut, client):
             ]
         })
 
-@app.view("run_cmd_view")
+
+@app.view("custom_cmd_view")
 def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
