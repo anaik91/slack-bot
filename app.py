@@ -98,7 +98,6 @@ def open_modal(ack, shortcut, client):
 @app.view("run_cmd_view")
 def custom_command(body,ack,shortcut, client):
     ack()
-    channel=body['channel']['id']
     command_type=view["state"]["values"]['command_type']['command_type']['selected_option']['value']
     if command_type == 'default':
         command_block={
@@ -111,7 +110,7 @@ def custom_command(body,ack,shortcut, client):
                 "label": {
                     "type": "plain_text",
                     "text": "Command to Run",
-                    "emoji": true
+                    "emoji": True
                 }
             }
     else:
@@ -127,27 +126,27 @@ def custom_command(body,ack,shortcut, client):
                 "placeholder": {
                     "type": "plain_text",
                     "text": "Select an item",
-                    "emoji": true
+                    "emoji": True
                 },
                 "options": [{
                         "text": {
                             "type": "plain_text",
                             "text": "apigee-all status",
-                            "emoji": true
+                            "emoji": True
                         },
                         "value": "apigee-all status"
                     }, {
                         "text": {
                             "type": "plain_text",
                             "text": "df -h",
-                            "emoji": true
+                            "emoji": True
                         },
                         "value": "df -h"
                     }, {
                         "text": {
                             "type": "plain_text",
                             "text": "lsblk",
-                            "emoji": true
+                            "emoji": True
                         },
                         "value": "lsblk"
                     }
@@ -163,17 +162,17 @@ def custom_command(body,ack,shortcut, client):
             "submit": {
                 "type": "plain_text",
                 "text": "Submit",
-                "emoji": true
+                "emoji": True
             },
             "close": {
                 "type": "plain_text",
                 "text": "Cancel",
-                "emoji": true
+                "emoji": True
             },
             "title": {
                 "type": "plain_text",
                 "text": "Run Command Menu",
-                "emoji": true
+                "emoji": True
             },
             "blocks": [
                 {
@@ -209,7 +208,7 @@ def custom_command(body,ack,shortcut, client):
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
-                            "emoji": true
+                            "emoji": True
                         },
                         "action_id": "channel_id"
                     }
