@@ -1461,7 +1461,7 @@
       }
     ],
     "uninstall": [
-
+      {
         "type": "divider"
       }, {
         "type": "header",

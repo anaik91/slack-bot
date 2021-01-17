@@ -84,8 +84,8 @@ class messageHandler:
     
     def getDocBlock(self):
         blocks=get_blocks_from_file(Config.DOC_FILE)
-        sub_command=list(blocks.keys())
-        component=list(blocks[sub_command[0]].keys())
+        component=list(blocks.keys())
+        sub_command=list(blocks[component[0]].keys())
         if len(self.message)==1:
             return get_doc_help(self.user,component,sub_command)
         if len(self.message)==2:
@@ -94,7 +94,7 @@ class messageHandler:
                 return get_doc_help(self.user,component,sub_command)
             else:
                 sub_blocks =[]
-                [ sub_blocks.extend(j[verb1]) for i,j in blocks.items() ] 
+                [ sub_blocks.extend(blocks[verb1][i]) for i in blocks[verb1] ] 
                 return sub_blocks
         if len(self.message)==3:
             verb1 = self.message[1]
@@ -102,5 +102,5 @@ class messageHandler:
             if verb1 not in component or verb2 not in sub_command:
                 return get_doc_help(self.user,component,sub_command)
             else:
-                return blocks[verb2][verb1]
+                return blocks[verb1][verb2]
         return get_doc_help(self.user,component,sub_command)
