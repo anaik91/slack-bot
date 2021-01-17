@@ -4,5 +4,7 @@
     "netstat -tulpn",
     "cat /proc/cpuinfo | grep proc",
     "ifconfig",
-    "cat /etc/fstab"
+    "cat /etc/fstab",
+    "uptime",
+    "cat /etc/os-release"
 ]

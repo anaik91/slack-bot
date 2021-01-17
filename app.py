@@ -97,7 +97,7 @@ def open_modal(ack, shortcut, client):
             ]
         })
 
-@app.view("run_cmd_view")
+@app.action("command_type")
 def custom_command(body,ack,shortcut, client,view):
     ack()
     command_type=view["state"]["values"]['command_type']['command_type']['selected_option']['value']
@@ -141,8 +141,9 @@ def custom_command(body,ack,shortcut, client,view):
                 "action_id": "node_command"
             }
         }
-    client.views_open(
-        trigger_id=body["trigger_id"],
+    client.views_update(
+        view_id=body["view"]["id"],
+        hash=body["view"]["hash"],
         view={
             "type": "modal",
             "callback_id": "custom_cmd_view",
