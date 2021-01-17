@@ -1,4 +1,5 @@
 import logging
+import json
 from slack_bolt import App
 from flask import Flask, request ,jsonify
 from slack_bolt.adapter.flask import SlackRequestHandler
@@ -6,6 +7,7 @@ from config import Config
 from message_controller import messageHandler
 logging.basicConfig(level=logging.DEBUG)
 app = App()
+Config.COMMAND_LIST=json.loads(open(Config.COMMAND_LIST_FILE).read())
 
 @app.event("reaction_added")
 def foo(say):
@@ -128,29 +130,14 @@ def custom_command(body,ack,shortcut, client,view):
                     "text": "Select an item",
                     "emoji": True
                 },
-                "options": [{
+                "options": [
+                    {
                         "text": {
                             "type": "plain_text",
-                            "text": "apigee-all status",
-                            "emoji": True
+                            "text": i
                         },
-                        "value": "apigee-all status"
-                    }, {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "df -h",
-                            "emoji": True
-                        },
-                        "value": "df -h"
-                    }, {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "lsblk",
-                            "emoji": True
-                        },
-                        "value": "lsblk"
-                    }
-                ],
+                        "value": i
+                    } for i in Config.COMMAND_LIST],
                 "action_id": "node_command"
             }
         }

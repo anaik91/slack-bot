@@ -9,3 +9,5 @@ class Config(object):
     RUNDECK_API_URL=os.environ['RUNDECK_API_URL']
     RUNDECK_API_TOKEN=os.environ['RUNDECK_API_TOKEN']
     DOC_FILE='command-block-map.json'
+    COMMAND_LIST_FILE='command_list.json'
+    COMMAND_LIST=[]
