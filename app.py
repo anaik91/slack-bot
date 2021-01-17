@@ -99,7 +99,7 @@ def open_modal(ack, shortcut, client):
 def custom_command(body,ack,shortcut, client,view):
     ack()
     command_type=view["state"]["values"]['command_type']['command_type']['selected_option']['value']
-    if command_type == 'default':
+    if command_type == 'custom':
         command_block={
                 "type": "input",
                 "block_id": "node_command",
