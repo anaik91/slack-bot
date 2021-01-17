@@ -95,7 +95,7 @@ def open_modal(ack, shortcut, client):
             ]
         })
 
-@app.action("command_type")
+@app.view("run_cmd_view")
 def custom_command(body,ack,shortcut, client):
     ack()
     channel=body['channel']['id']
