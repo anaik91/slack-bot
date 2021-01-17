@@ -59,88 +59,146 @@ def open_modal(ack, shortcut, client):
                 "text": "Run Command Menu",
                 "emoji": True
             },
-            "blocks": [
-                {
-                    "type": "divider"
+            "blocks": [{
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Run Predefined Commands"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click me!"
+                        },
+                        "action_id": "default_button"
+                    }
                 },
                 {
-                    "type": "input",
-                    "block_id": "command_type",
-                    "element": {
-                        "type": "radio_buttons",
-                        "options": [
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Pre-defined Commands",
-                                    "emoji": True
-                                },
-                                "value": "default"
-                            },
-                            {
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Enter the Comand",
-                                    "emoji": True
-                                },
-                                "value": "custom"
-                            }
-                        ],
-                        "action_id": "command_type"
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Enter the Command"
                     },
-                    "label": {
-                        "type": "plain_text",
-                        "text": "Run Type",
-                        "emoji": True
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click me!"
+                        },
+                        "action_id": "custom_button"
                     }
                 }
             ]
         })
 
-@app.action("command_type")
-def custom_command(body,ack,shortcut, client,view):
+@app.action("default_button")
+def custom_command1(body,ack,shortcut, client,view):
     ack()
-    command_type=view["state"]["values"]['command_type']['command_type']['selected_option']['value']
-    if command_type == 'custom':
-        command_block={
-                "type": "input",
-                "block_id": "node_command",
-                "element": {
-                    "type": "plain_text_input",
-                    "action_id": "node_command"
-                },
-                "label": {
-                    "type": "plain_text",
-                    "text": "Command to Run",
-                    "emoji": True
-                }
-            }
-    else:
-        command_block={
-            "type": "section",
-            "block_id": "node_command",
-            "text": {
-                "type": "mrkdwn",
-                "text": "Command to Run"
+    command_block={
+        "type": "section",
+        "block_id": "node_command",
+        "text": {
+            "type": "mrkdwn",
+            "text": "Command to Run"
+        },
+        "accessory": {
+            "type": "static_select",
+            "placeholder": {
+                "type": "plain_text",
+                "text": "Select an item",
+                "emoji": True
             },
-            "accessory": {
-                "type": "static_select",
-                "placeholder": {
-                    "type": "plain_text",
-                    "text": "Select an item",
-                    "emoji": True
-                },
-                "options": [
-                    {
-                        "text": {
-                            "type": "plain_text",
-                            "text": i
-                        },
-                        "value": i
-                    } for i in Config.COMMAND_LIST],
-                "action_id": "node_command"
-            }
+            "options": [
+                {
+                    "text": {
+                        "type": "plain_text",
+                        "text": i
+                    },
+                    "value": i
+                } for i in Config.COMMAND_LIST],
+            "action_id": "node_command"
         }
+    }
+    client.views_update(
+        view_id=body["view"]["id"],
+        hash=body["view"]["hash"],
+        view={
+            "type": "modal",
+            "callback_id": "custom_cmd_view",
+            "submit": {
+                "type": "plain_text",
+                "text": "Submit",
+                "emoji": True
+            },
+            "close": {
+                "type": "plain_text",
+                "text": "Cancel",
+                "emoji": True
+            },
+            "title": {
+                "type": "plain_text",
+                "text": "Run Command Menu",
+                "emoji": True
+            },
+            "blocks": [
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "block_id": "node_ip",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Pick a Server from the list"
+                    },
+                    "accessory": {
+                        "action_id": "node_ip",
+                        "type": "external_select",
+                        "placeholder": {
+                            "type": "plain_text",
+                            "text": "Select an item"
+                        },
+                        "min_query_length": 2
+                    }
+                },
+                command_block,
+                {
+                    "type": "section",
+                    "block_id": "channel_id",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Choose a Channel to Post the Output to "
+                    },
+                    "accessory": {
+                        "type": "multi_conversations_select",
+                        "placeholder": {
+                            "type": "plain_text",
+                            "text": "Select Channel",
+                            "emoji": True
+                        },
+                        "action_id": "channel_id"
+                    }
+                }
+            ]
+        })
+
+@app.action("custom_button")
+def custom_command2(body,ack,shortcut, client,view):
+    ack()
+    command_block={
+            "type": "input",
+            "block_id": "node_command",
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "node_command"
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Command to Run",
+                "emoji": True
+            }
+    }
     client.views_update(
         view_id=body["view"]["id"],
         hash=body["view"]["hash"],
