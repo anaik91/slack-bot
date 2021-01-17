@@ -155,7 +155,7 @@ def custom_command(body,ack,shortcut, client,view):
             }
         }
     client.views_open(
-        trigger_id=shortcut["trigger_id"],
+        trigger_id=body["trigger_id"],
         view={
             "type": "modal",
             "callback_id": "custom_cmd_view",
