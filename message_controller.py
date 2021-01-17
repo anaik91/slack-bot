@@ -5,7 +5,6 @@ from slack_sdk.errors import SlackApiError
 from all_blocks import *
 from rundeck_controller import rundeck
 from config import Config
-from flask import current_app
 
 def process_slack_response(channel,text=None,blocks=None):
     slack_web_client = WebClient(token=Config.SLACK_BOT_TOKEN)
@@ -52,6 +51,12 @@ class messageHandler:
         if len(self.message) == 2:
             if verb1 == 'lp':
                 return generic_list(r.listProjects())
+            if verb1 == 'lpns':
+                ps=r.listProjects()
+                servers=[]
+                for ep in ps:
+                    servers.extend([ '{}#{}'.format(ep,i) for i in r.listNodes(ep)])
+                return servers
             else :
                 return get_run_help(self.user)
         if len(self.message) == 3:
@@ -65,7 +70,7 @@ class messageHandler:
             verb3 = self.message[3]
             command = ' '.join(self.message[4:])
             if verb1 == 'rc':
-                process_slack_response(self.channel,blocks=get_running_command(command))
+                process_slack_response(self.channel,blocks=get_running_command(command,verb3))
                 jobid=r.runCommand(verb2,verb3,command)
                 status,outputText=r.waitForJob(jobid)
                 if status:
@@ -78,7 +83,7 @@ class messageHandler:
             return get_run_help(self.user)
     
     def getDocBlock(self):
-        blocks=current_app.doc_blocks
+        blocks=get_blocks_from_file(Config.DOC_FILE)
         sub_command=list(blocks.keys())
         component=list(blocks[sub_command[0]].keys())
         if len(self.message)==1:

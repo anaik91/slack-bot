@@ -186,13 +186,13 @@ def generic_info(data):
         ]
     return block
 
-def get_running_command(command):
+def get_running_command(command,node):
     block = [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Running Command `{}` :loading:".format(command)
+                    "text": "Running Command `{}` on Node `{}` :loading:".format(command,node)
                 }
             }
         ]
