@@ -141,15 +141,37 @@ def get_error(user,message):
 
 def get_command(command,status,output):
     if status:
-        block = [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Command: `{}` Run Success :gh-check-passed: \n```{}```".format(command,output)
+        if len(output) < 2900:
+            block = [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Command: `{}` Run Success :gh-check-passed: \n```{}```".format(command,output)
+                        }
                     }
-                }
-            ]
+                ]
+        else:
+            ind=list(range(0,len(output),2900))
+            ind.append(len(output))
+            ind_list=[(ind[ind.index(i)],ind[ind.index(i)+1]) for i in ind if ind.index(i)%2==0]
+            block = [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Command: `{}` Run Success :gh-check-passed:".format(command)
+                        }
+                    }
+                ]
+            [block.append({
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "```{}```".format(output[i[0]:i[1]])
+                        }
+                    }) for i in ind_list]
+            return block
     else:
         block = [
                 {
