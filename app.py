@@ -36,64 +36,64 @@ def event_test(body,say, ack,logger,client):
     m=messageHandler(command_text,user,channel_id)
     say(blocks=m.getBlock())
 
-@app.shortcut("run_command_callback")
-def open_modal(ack, shortcut, client):
-    ack()
-    client.views_open(
-        trigger_id=shortcut["trigger_id"],
-        view={
-            "type": "modal",
-            "callback_id": "run_cmd_view",
-            "submit": {
-                "type": "plain_text",
-                "text": "Submit",
-                "emoji": True
-            },
-            "close": {
-                "type": "plain_text",
-                "text": "Cancel",
-                "emoji": True
-            },
-            "title": {
-                "type": "plain_text",
-                "text": "Run Command Menu",
-                "emoji": True
-            },
-            "blocks": [{
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Run Predefined Commands"
-                    },
-                    "accessory": {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Click me!"
-                        },
-                        "action_id": "default_button"
-                    }
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Enter the Command"
-                    },
-                    "accessory": {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Click me!"
-                        },
-                        "action_id": "custom_button"
-                    }
-                }
-            ]
-        })
+# @app.shortcut("run_command_callback")
+# def open_modal(ack, shortcut, client):
+#     ack()
+#     client.views_open(
+#         trigger_id=shortcut["trigger_id"],
+#         view={
+#             "type": "modal",
+#             "callback_id": "run_cmd_view",
+#             "submit": {
+#                 "type": "plain_text",
+#                 "text": "Submit",
+#                 "emoji": True
+#             },
+#             "close": {
+#                 "type": "plain_text",
+#                 "text": "Cancel",
+#                 "emoji": True
+#             },
+#             "title": {
+#                 "type": "plain_text",
+#                 "text": "Run Command Menu",
+#                 "emoji": True
+#             },
+#             "blocks": [{
+#                     "type": "section",
+#                     "text": {
+#                         "type": "mrkdwn",
+#                         "text": "Run Predefined Commands"
+#                     },
+#                     "accessory": {
+#                         "type": "button",
+#                         "text": {
+#                             "type": "plain_text",
+#                             "text": "Click me!"
+#                         },
+#                         "action_id": "default_button"
+#                     }
+#                 },
+#                 {
+#                     "type": "section",
+#                     "text": {
+#                         "type": "mrkdwn",
+#                         "text": "Enter the Command"
+#                     },
+#                     "accessory": {
+#                         "type": "button",
+#                         "text": {
+#                             "type": "plain_text",
+#                             "text": "Click me!"
+#                         },
+#                         "action_id": "custom_button"
+#                     }
+#                 }
+#             ]
+#         })
 
-@app.action("default_button")
-def custom_command1(body,ack,shortcut, client,view):
+@app.shortcut("run_command_callback")
+def open_modal(body,ack,shortcut, client,view):
     ack()
     command_block={
         "type": "section",
@@ -120,9 +120,8 @@ def custom_command1(body,ack,shortcut, client,view):
             "action_id": "node_command"
         }
     }
-    client.views_update(
-        view_id=body["view"]["id"],
-        hash=body["view"]["hash"],
+    client.views_open(
+        trigger_id=shortcut["trigger_id"],
         view={
             "type": "modal",
             "callback_id": "custom_cmd_view",
@@ -179,12 +178,27 @@ def custom_command1(body,ack,shortcut, client,view):
                         },
                         "action_id": "channel_id"
                     }
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Enter the Command"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click me!"
+                        },
+                        "action_id": "custom_button"
+                    }
                 }
             ]
         })
 
 @app.action("custom_button")
-def custom_command2(body,ack,shortcut, client,view):
+def update_modal(body,ack,shortcut, client,view):
     ack()
     command_block={
             "type": "input",
