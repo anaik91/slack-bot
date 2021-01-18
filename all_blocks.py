@@ -254,7 +254,7 @@ def get_doc_help(user,component,sub_command):
         ]
     return help_block
 
-def get_log(url,node,status):
+def get_log(url,log_path,node,status):
     if status:
         block = [
                 {
@@ -264,7 +264,7 @@ def get_log(url,node,status):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "Click <{}|this is a link> to Download logs  from {}".format(url,node)
+                        "text": "Click <{}| on this is link> to Download {} from {}".format(url,log_path,node)
                     }
                 },
                 {
@@ -280,7 +280,7 @@ def get_log(url,node,status):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Issue fetching Logs from {} !!".format(node)
+                    "text": "Issue fetching file {} from {} !!".format(log_path,node)
                 }
             },
             {
