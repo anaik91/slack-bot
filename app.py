@@ -234,6 +234,94 @@ def handle_submission(ack, body, client,say, view):
     m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
+@app.shortcut("get_log_callback")
+def open_log_modal(body,ack,shortcut, client,view):
+    ack()
+    client.views_open(
+        trigger_id=shortcut["trigger_id"],
+        view={
+        "type": "modal",
+        "callback_id": "get_log_view",
+        "submit": {
+            "type": "plain_text",
+            "text": "Submit",
+            "emoji": True
+        },
+        "close": {
+            "type": "plain_text",
+            "text": "Cancel",
+            "emoji": True
+        },
+        "title": {
+            "type": "plain_text",
+            "text": "Log Exporter",
+            "emoji": True
+        },
+        "blocks": [
+            {
+                "type": "divider"
+            },
+            {
+                "type": "section",
+                "block_id": "node_ip",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Pick a Server from the list"
+                },
+                "accessory": {
+                    "action_id": "node_ip",
+                    "type": "external_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select an item"
+                    },
+                    "min_query_length": 2
+                }
+            },
+            {
+                "type": "input",
+                "block_id": "log_path",
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "log_path"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Enter the File Path",
+                    "emoji": True
+                }
+            },
+            {
+                "type": "section",
+                "block_id": "channel_id",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Choose a Channel to Post the Output to "
+                },
+                "accessory": {
+                    "type": "multi_conversations_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select Channel",
+                        "emoji": True
+                    },
+                    "action_id": "channel_id"
+                }
+            }
+        ]
+    })
+
+@app.view("get_log_view")
+def handle_log_submission(ack, body, client,say, view):
+    ack()
+    user = body["user"]["id"]
+    node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
+    log_path=view["state"]["values"]['log_path']['log_path']['value']
+    channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
+    command='sudo python3 /tmp/minio_client.py --minio_url {} --minio_access_key {} --minio_secret_key {} --minio_bucket {} --file_location {}'.format(Config.MINIO_URL,Config.MINIO_ACCESS_KEY,Config.MINIO_SECRET_KEY,Config.MINIO_BUCKET,log_path)
+    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command),user,channelid)
+    say(channel=channelid,blocks=m.getBlock())
+
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)
 
