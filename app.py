@@ -164,6 +164,21 @@ def open_modal(body,ack,shortcut, client,view):
                 command_block,
                 {
                     "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Enter your own Command"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click me!"
+                        },
+                        "action_id": "custom_button"
+                    }
+                },
+                {
+                    "type": "section",
                     "block_id": "channel_id",
                     "text": {
                         "type": "mrkdwn",
@@ -177,21 +192,6 @@ def open_modal(body,ack,shortcut, client,view):
                             "emoji": True
                         },
                         "action_id": "channel_id"
-                    }
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Enter the Command"
-                    },
-                    "accessory": {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Click me!"
-                        },
-                        "action_id": "custom_button"
                     }
                 }
             ]
