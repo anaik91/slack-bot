@@ -154,7 +154,7 @@ def get_command(command,status,output):
         else:
             ind=list(range(0,len(output),2900))
             ind.append(len(output))
-            ind_list=[(ind[ind.index(i)],ind[ind.index(i)+1]) for i in ind if ind.index(i)%2==0]
+            ind_list=[(ind[ind.index(i)],ind[ind.index(i)+1]) for i in ind if ind.index(i)<len(ind)-1]
             block = [
                     {
                         "type": "section",
