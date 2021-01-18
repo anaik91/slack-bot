@@ -319,7 +319,7 @@ def handle_log_submission(ack, body, client,say, view):
     log_path=view["state"]["values"]['log_path']['log_path']['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
     command='sudo python3 /tmp/minio_client.py --minio_url {} --minio_access_key {} --minio_secret_key {} --minio_bucket {} --file_location {}'.format(Config.MINIO_URL,Config.MINIO_ACCESS_KEY,Config.MINIO_SECRET_KEY,Config.MINIO_BUCKET,log_path)
-    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command),user,channelid)
+    m=messageHandler('gl {} {}'.format(node_value.replace('#',' '),command),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 flask_app = Flask(__name__)

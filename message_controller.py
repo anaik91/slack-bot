@@ -38,6 +38,8 @@ class messageHandler:
             return self.getRunBlock()
         if self.message[0] == 'doc':
             return self.getDocBlock()
+        if self.message[0] == 'gl':
+            return self.getLogBlock()
         if not self.isValidMessage():
             return get_run_help(self.user)
         return get_help(self.user)
@@ -106,3 +108,20 @@ class messageHandler:
             else:
                 return blocks[verb1][verb2]
         return get_doc_help(self.user,component,sub_command)
+    
+    def getLogBlock(self):
+        r = rundeck(Config.RUNDECK_API_URL,Config.RUNDECK_API_TOKEN)
+        if not r.isValidAuthToken():
+            return get_error(self.user,'Invalid Rundeck Config')
+        if len(self.message) > 3:
+            verb2 = self.message[1]
+            verb3 = self.message[2]
+            command = ' '.join(self.message[3:])
+            jobid=r.runCommand(verb2,verb3,command)
+            status,outputText=r.waitForJob(jobid)
+            parsed=json.loads(outputText)
+            url=parsed['url']
+            if len(url)>0:
+                return get_log(url,verb3,True)
+            else:
+                return get_log(url,verb3,False)

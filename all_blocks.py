@@ -253,3 +253,39 @@ def get_doc_help(user,component,sub_command):
             }
         ]
     return help_block
+
+def get_log(url,node,status):
+    if status:
+        block = [
+                {
+                "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Click <{}|this is a link> to Download logs  from {}".format(url,node)
+                    }
+                },
+                {
+                    "type": "divider"
+                }
+            ]
+    else:
+        block = [
+            {
+			"type": "divider"
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Issue fetching Logs from {} !!".format(node)
+                }
+            },
+            {
+                "type": "divider"
+            }
+        ]
+
+    return block
