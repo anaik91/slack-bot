@@ -48,6 +48,8 @@ class messageHandler:
         r = rundeck(Config.RUNDECK_API_URL,Config.RUNDECK_API_TOKEN)
         if not r.isValidAuthToken():
             return get_error(self.user,'Invalid Rundeck Config')
+        if len(self.message) == 1:
+            return get_run_help(self.user)
         if len(self.message) == 2:
             if verb1 == 'lp':
                 return generic_list(r.listProjects())
