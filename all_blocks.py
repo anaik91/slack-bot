@@ -171,7 +171,8 @@ def get_command(command,status,output):
                             "text": "```{}```".format(output[i[0]:i[1]])
                         }
                     }) for i in ind_list]
-            return block
+            if len(block) > 50:
+                block=block[:50]
     else:
         block = [
                 {
