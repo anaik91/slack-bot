@@ -120,6 +120,22 @@ def open_modal(body,ack,shortcut, client,view):
                         },
                         "action_id": "custom_button"
                     }
+                },{
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Fetch Logs"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click Me",
+                            "emoji": True
+                        },
+                        "value": "click_me_123",
+                        "action_id": "log_button"
+                    }
                 },
                 {
                     "type": "section",
@@ -234,11 +250,12 @@ def handle_submission(ack, body, client,say, view):
     m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
-@app.shortcut("get_log_callback")
+@app.action("log_button")
 def open_log_modal(body,ack,shortcut, client,view):
     ack()
-    client.views_open(
-        trigger_id=shortcut["trigger_id"],
+    client.views_update(
+        view_id=body["view"]["id"],
+        hash=body["view"]["hash"],
         view={
         "type": "modal",
         "callback_id": "get_log_view",
