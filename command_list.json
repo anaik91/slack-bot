@@ -1,0 +1,10 @@
+[
+    "apigee-all status",
+    "df -h",
+    "netstat -tulpn",
+    "cat /proc/cpuinfo | grep proc",
+    "ifconfig",
+    "cat /etc/fstab",
+    "uptime",
+    "cat /etc/os-release"
+]

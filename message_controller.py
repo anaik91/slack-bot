@@ -38,6 +38,8 @@ class messageHandler:
             return self.getRunBlock()
         if self.message[0] == 'doc':
             return self.getDocBlock()
+        if self.message[0] == 'gl':
+            return self.getLogBlock()
         if not self.isValidMessage():
             return get_run_help(self.user)
         return get_help(self.user)
@@ -48,6 +50,8 @@ class messageHandler:
         r = rundeck(Config.RUNDECK_API_URL,Config.RUNDECK_API_TOKEN)
         if not r.isValidAuthToken():
             return get_error(self.user,'Invalid Rundeck Config')
+        if len(self.message) == 1:
+            return get_run_help(self.user)
         if len(self.message) == 2:
             if verb1 == 'lp':
                 return generic_list(r.listProjects())
@@ -84,8 +88,8 @@ class messageHandler:
     
     def getDocBlock(self):
         blocks=get_blocks_from_file(Config.DOC_FILE)
-        sub_command=list(blocks.keys())
-        component=list(blocks[sub_command[0]].keys())
+        component=list(blocks.keys())
+        sub_command=list(blocks[component[0]].keys())
         if len(self.message)==1:
             return get_doc_help(self.user,component,sub_command)
         if len(self.message)==2:
@@ -94,7 +98,7 @@ class messageHandler:
                 return get_doc_help(self.user,component,sub_command)
             else:
                 sub_blocks =[]
-                [ sub_blocks.extend(j[verb1]) for i,j in blocks.items() ] 
+                [ sub_blocks.extend(blocks[verb1][i]) for i in blocks[verb1] ] 
                 return sub_blocks
         if len(self.message)==3:
             verb1 = self.message[1]
@@ -102,5 +106,23 @@ class messageHandler:
             if verb1 not in component or verb2 not in sub_command:
                 return get_doc_help(self.user,component,sub_command)
             else:
-                return blocks[verb2][verb1]
+                return blocks[verb1][verb2]
         return get_doc_help(self.user,component,sub_command)
+    
+    def getLogBlock(self):
+        r = rundeck(Config.RUNDECK_API_URL,Config.RUNDECK_API_TOKEN)
+        if not r.isValidAuthToken():
+            return get_error(self.user,'Invalid Rundeck Config')
+        if len(self.message) > 3:
+            project = self.message[1]
+            node = self.message[2]
+            command = ' '.join(self.message[3:])
+            log_path = command.split(' ')[-1]
+            jobid=r.runCommand(project,node,command)
+            _,outputText=r.waitForJob(jobid)
+            parsed=json.loads(outputText)
+            url=parsed['url']
+            if len(url)>0:
+                return get_log(url,log_path,node,True)
+            else:
+                return get_log(url,log_path,node,False)

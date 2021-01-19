@@ -1,8 +1,10 @@
 {
-  "install": {
-    "cs": [{
+  "cs": {
+    "install": [
+      {
         "type": "divider"
-      }, {
+      },
+      {
         "type": "header",
         "text": {
           "type": "plain_text",
@@ -46,8 +48,178 @@
         "type": "divider"
       }
     ],
-
-    "zk": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Cassandra UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Cassandra Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+      {
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Cassandra Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` Cassandra must be running to take backup.\n\n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-cassandra\n\t\t\t• /opt/apigee/etc/apigee-cassandra.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/apigee-cassandra.properties\n\t\t\t• /opt/apigee/customer/application/apigee-cassandra.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/apigee-cassandra directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+  ],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Cassandra Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc cs service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-cassandra\n\t\t\t• /opt/apigee/etc/apigee-cassandra.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/apigee-cassandra/*`\n\t\t\t• `rm -rf /opt/apigee/data/apigee-cassandra.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "zk": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -94,7 +266,175 @@
         "type": "divider"
       }
     ],
-    "ms": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Zookeeper UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Zookeeper Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+      {
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Zookeeper Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` \n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-zookeeper\n\t\t\t• /opt/apigee/etc/apigee-zookeeper.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/apigee-zookeeper.properties\n\t\t\t• /opt/apigee/customer/application/apigee-zookeeper.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/apigee-zookeeper directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Zookeeper Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc zk service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-zookeeper\n\t\t\t• /opt/apigee/etc/apigee-zookeeper.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/apigee-zookeeper/*`\n\t\t\t• `rm -rf /opt/apigee/data/apigee-zookeeper.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "ms": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -141,7 +481,176 @@
         "type": "divider"
       }
     ],
-    "ui": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Management Server UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-server uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Management Server Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Management Server Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` \n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-management\n\t\t\t• /opt/apigee/etc/edge-management.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/edge-management.properties\n\t\t\t• /opt/apigee/customer/application/edge-management.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/edge-management directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Management Server Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-server restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc ms service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-management-server\n\t\t\t• /opt/apigee/etc/edge-management-server.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/edge-management-server/*`\n\t\t\t• `rm -rf /opt/apigee/data/edge-management-server.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service edge-management-server restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "ui": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -188,7 +697,176 @@
         "type": "divider"
       }
     ],
-    "ld": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Edge UI UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-ui uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Edge UI Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-ui start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-ui restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Edge UI Server Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-ui backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` \n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-ui\n\t\t\t• /opt/apigee/etc/edge-ui.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/edge-ui.properties\n\t\t\t• /opt/apigee/customer/application/edge-ui.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/edge-ui directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Edge UI Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-ui restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc ui service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-ui\n\t\t\t• /opt/apigee/etc/edge-ui.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/edge-ui/*`\n\t\t\t• `rm -rf /opt/apigee/data/edge-ui.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service edge-ui restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "ld": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -235,14 +913,183 @@
         "type": "divider"
       }
     ],
-    "pg": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "LDAP UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "LDAP Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup":  [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "LDAP Server Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` \n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-openldap\n\t\t\t• /opt/apigee/etc/apigee-openldap.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/apigee-openldap.properties\n\t\t\t• /opt/apigee/customer/application/apigee-openldap.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/apigee-openldap directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " LDAP Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc ld service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-openldap\n\t\t\t• /opt/apigee/etc/apigee-openldap.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/apigee-openldap/*`\n\t\t\t• `rm -rf /opt/apigee/data/apigee-openldap.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "pg": {
+    "install": [
+      {
         "type": "divider"
       },
       {
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Postgres Installation Command",
+          "text": "Postgres Server Installation Command",
           "emoji": true
         }
       },
@@ -282,7 +1129,291 @@
         "type": "divider"
       }
     ],
-    "rr": [{
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Postgres Server UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql uninstall`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Postgres Server Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "plain_text",
+          "text": "apigee-postgresql",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql wait_for_ready`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "plain_text",
+          "text": "edge-postgres-server",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Postgres Server Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "apigee-postgresql",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` postgres must be running to take backup.\n\n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-postgresql\n\t\t\t• /opt/apigee/etc/apigee-postgresql.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/apigee-postgresql.properties\n\t\t\t• /opt/apigee/customer/application/apigee-postgresql.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/apigee-postgresql directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "edge-postgres-server",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`Note` postgres must be running to take backup.\n\n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-postgres-server\n\t\t\t• /opt/apigee/etc/edge-postgres-server.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/edge-postgres-server.properties\n\t\t\t• /opt/apigee/customer/application/edge-postgres-server.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/edge-postgres-server directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Postgres Server Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "apigee-postgresql",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc pg service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/apigee-postgresql\n\t\t\t• /opt/apigee/etc/apigee-postgresql.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/apigee-postgresql/*`\n\t\t\t• `rm -rf /opt/apigee/data/apigee-postgresql.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "edge-postgres-server",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc pg service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-postgres-server\n\t\t\t• /opt/apigee/etc/edge-postgres-server.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/edge-postgres-server/*`\n\t\t\t• `rm -rf /opt/apigee/data/edge-postgres-server.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "rr": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -329,8 +1460,177 @@
         "type": "divider"
       }
     ],
+    "uninstall": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Router UnInstallation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-router uninstall`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Router Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-router start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-router restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Router Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-router backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "\n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-router\n\t\t\t• /opt/apigee/etc/edge-router.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/edge-router.properties\n\t\t\t• /opt/apigee/customer/application/edge-router.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/edge-router directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+    {
+			"type": "divider"
+		}
 
-    "mp": [{
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Router Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-router restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc rr service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-router\n\t\t\t• /opt/apigee/etc/edge-router.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/edge-router/*`\n\t\t\t• `rm -rf /opt/apigee/data/edge-router.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service edge-router restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "mp": {
+    "install": [
+      {
         "type": "divider"
       },
       {
@@ -377,324 +1677,8 @@
         "type": "divider"
       }
     ],
-
-    "mo": [{
-        "type": "divider"
-      },
+    "uninstall": [
       {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Monit Installation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-monit install` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit configure` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit start`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/apigee-monit",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ]
-
-  },
-  "uninstall": {
-    "cs": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Cassandra UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "zk": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Zookeeper UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ms": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Management Server UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-server uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ui": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Edge UI UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-management-ui uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ld": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "LDAP UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-openldap uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "pg": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Postgres UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql uninstall`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "rr": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Router UnInstallation Command",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "`/opt/apigee/apigee-service/bin/apigee-service edge-router uninstall`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "apigee docs reference link"
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me",
-            "emoji": true
-          },
-          "value": "click_me_123",
-          "url": "https://docs.apigee.com/private-cloud/v4.19.01/uninstalling-edge",
-          "action_id": "button-action"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "mp": [{
         "type": "divider"
       }, {
         "type": "header",
@@ -733,7 +1717,177 @@
         "type": "divider"
       }
     ],
-    "mo": [{
+    "service": [
+      {
+        "type": "divider"
+      }, {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Message Processor Service Commands",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor wait_for_ready`"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "backup": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Message Processor Backup Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-message-processor backup`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "\n• Creates a tar file of the following directories and files\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-message-processor\n\t\t\t• /opt/apigee/etc/edge-message-processor.d\n\t\tb. Files if they exist\n\t\t\t• /opt/apigee/token/application/edge-message-processor.properties\n\t\t\t• /opt/apigee/customer/application/edge-message-processor.properties\n\t\t\t• /opt/apigee/customer/defaults.sh\n\t\t\t• /opt/apigee/customer/conf/license.txt\n\t\tc. Creates a .tar.gz file in the /opt/apigee/backup/edge-message-processor directory. The file name has the following form:\n\t\t\t`backup-year.month.day,hour.min.seconds.tar.gz`\n\t\t\tFor example:\n\t\t\t`backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-backup",
+				"action_id": "button-action"
+			}
+		},
+    {
+			"type": "divider"
+		}
+	],
+    "restore": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Message Processor Restore Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-service/bin/apigee-service edge-message-processor restore backup_file`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To restore a component from a backup file:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "• Stop the component\n\t\tTo refer the stop command\n\t\tRun `@super_bot doc mp service`\n• Ensure that the following directories are empty\n\t\ta. Directories\n\t\t\t• /opt/apigee/data/edge-message-processor\n\t\t\t• /opt/apigee/etc/edge-message-processor.d\n\t\tb. If they are not empty, delete their contents using commands like the following:\n\t\t\t• `rm -rf /opt/apigee/data/edge-message-processor/*`\n\t\t\t• `rm -rf /opt/apigee/data/edge-message-processor.d/*`\n• For example:\n\t\t\t`/opt/apigee/apigee-service/bin/apigee-service edge-message-processor restore backup-2018.05.29,11.13.42.tar.gz`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	]
+  },
+  "mo": {
+    "install": [
+      {
+        "type": "divider"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Monit Installation Command",
+          "emoji": true
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-monit install` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit configure` \n • `/opt/apigee/apigee-service/bin/apigee-service apigee-monit start`"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "apigee docs reference link"
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Click Me",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "url": "https://docs.apigee.com/private-cloud/v4.19.01/apigee-monit",
+          "action_id": "button-action"
+        }
+      },
+      {
+        "type": "divider"
+      }
+    ],
+    "uninstall": [
+      {
         "type": "divider"
       }, {
         "type": "header",
@@ -771,38 +1925,15 @@
       {
         "type": "divider"
       }
-    ]
-  },
-  "service": {
-    "cs": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Cassandra Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-cassandra wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
     ],
-
-    "zk": [{
+    "service": [
+      {
         "type": "divider"
       }, {
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Zookeeper Service Commands",
+          "text": "Monit Service Commands",
           "emoji": true
         }
       },
@@ -810,156 +1941,7 @@
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-zookeeper wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ms": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Management Server Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-management-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-management-server wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ui": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Edge UI Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-ui start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-ui restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-ui wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "ld": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "LDAP Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-openldap wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "pg": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Postgres Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "plain_text",
-          "text": "apigee-postgresql",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql start`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql stop`\n• `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql restart`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql status`\n • `/opt/apigee/apigee-service/bin/apigee-service apigee-postgresql wait_for_ready`"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "plain_text",
-          "text": "edge-postgres-server",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-postgres-server wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "rr": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Router Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-router start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-router restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-router wait_for_ready`"
-        }
-      },
-      {
-        "type": "divider"
-      }
-    ],
-    "mp": [{
-        "type": "divider"
-      }, {
-        "type": "header",
-        "text": {
-          "type": "plain_text",
-          "text": "Message Processor Service Commands",
-          "emoji": true
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor start`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor stop`\n• `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor restart`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor status`\n • `/opt/apigee/apigee-service/bin/apigee-service edge-message-processor wait_for_ready`"
+          "text": "`/opt/apigee/apigee-service/bin/apigee-service apigee-monit start`"
         }
       },
       {
