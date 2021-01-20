@@ -3,7 +3,7 @@
     "df -h",
     "netstat -tulpn",
     "cat /proc/cpuinfo | grep proc",
-    "ifconfig",
+    "/sbin/ifconfig",
     "cat /etc/fstab",
     "uptime",
     "cat /etc/os-release"
