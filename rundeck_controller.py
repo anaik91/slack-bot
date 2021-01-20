@@ -65,7 +65,7 @@ class rundeck:
             return False
 
     def runCommand(self,project,node,command):
-        url = '{}/project/{}/run/command?filter=name%3A%20{}&filterName='.format(self.baseUrl,project,node)
+        url = '{}/project/{}/run/command?filter=name:{}'.format(self.baseUrl,project,node)
         payload = {
             "project":project,
             "exec":command,
