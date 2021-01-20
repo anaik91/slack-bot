@@ -50,7 +50,7 @@ class rundeck:
         url = '{}/project/{}/resources'.format(self.baseUrl,project)
         response=requests.get(url,headers=self.headers,verify=False)
         if response.status_code == 200:
-            return list(response.json().keys())
+            return response.json()
         else:
             return []
     

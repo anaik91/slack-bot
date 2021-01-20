@@ -59,14 +59,15 @@ class messageHandler:
                 ps=r.listProjects()
                 servers=[]
                 for ep in ps:
-                    servers.extend([ '{}#{}'.format(ep,i) for i in r.listNodes(ep)])
+                    nodes=r.listNodes(ep)
+                    servers.extend([ '{}#{}#{}'.format(ep,i,nodes[i]['tags'] if 'tags' in nodes[i].keys() else '') for i in nodes])
                 return servers
             else :
                 return get_run_help(self.user)
         if len(self.message) == 3:
             verb2 = self.message[2]
             if verb1 == 'ln':
-                return generic_list(r.listNodes(verb2))
+                return generic_list(list(r.listNodes(verb2).keys()))
             else :
                 return get_run_help(self.user)
         if len(self.message) > 3:
