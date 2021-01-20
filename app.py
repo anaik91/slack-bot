@@ -247,7 +247,7 @@ def handle_submission(ack, body, client,say, view):
     else:
         command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
-    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
+    m=messageHandler('run rc {} {}'.format(' '.join(node_value.split('#')[:2]),command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 @app.action("log_button")
