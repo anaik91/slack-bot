@@ -1,10 +1,19 @@
 [
     "apigee-all status",
+    "apigee-all restart",
+    "apigee-all start",
+    "apigee-all stop",
+    "apigee-service apigee-monit report",
+    "apigee-service apigee-monit summary",
+    "apigee-service apigee-monit unmonitor -c all",
+    "apigee-service apigee-monit monitor -c all",
+    "apigee-service apigee-postgresql postgres-check-master",
+    "apigee-service apigee-postgresql postgres-check-standby",
+    "tail -n +1 /opt/apigee/customer/application/*",
     "df -h",
     "netstat -tulpn",
     "cat /proc/cpuinfo | grep proc",
     "/sbin/ifconfig",
     "cat /etc/fstab",
-    "uptime",
     "cat /etc/os-release"
 ]
