@@ -91,16 +91,17 @@ class rundeck:
         if response.status_code == 200:
             output = response.json()
             executionState = output['executionState']
+            allNodes = output['allNodes']
             completed = output['completed']
             if completed:
-                return True,executionState
+                return True,executionState,allNodes
             else:
-                return False,None
+                return False,None,None
         else:
-            return False,None
+            return False,None,None
     
-    def getJobOutputText(self,jobId):
-        url = '{}/execution/{}/output?format=text'.format(self.baseUrl,jobId)
+    def getJobOutputText(self,jobId,node):
+        url = '{}/execution/{}/output/node/{}?format=text'.format(self.baseUrl,jobId,node)
         response=requests.get(url,headers=self.headers,verify=False)
         if response.status_code == 200:
             output = response.text
@@ -109,15 +110,20 @@ class rundeck:
             return []
     
     def waitForJob(self,jobId):
-        completed,state=self.getJobState(jobId)
+        completed,state,allNodes=self.getJobState(jobId)
         while not completed:
-            completed,state=self.getJobState(jobId)
+            completed,state,allNodes=self.getJobState(jobId)
             sleep(1)
-        outputText=self.getJobOutputText(jobId)
+        outputTexts=[]
+        for each_node in allNodes:
+            outputTexts.append(
+                {
+                    each_node:self.getJobOutputText(jobId,each_node)
+                })
         if state == 'SUCCEEDED':
-            return True,outputText
+            return True,outputTexts
         elif state == 'FAILED':
-            return False,outputText
+            return False,outputTexts
         else:
-            return False,outputText
+            return False,outputTexts
             

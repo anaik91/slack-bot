@@ -140,49 +140,56 @@ def get_error(user,message):
     return block
 
 def get_command(command,status,output):
+    block=[]
     if status:
-        if len(output) < 2900:
-            block = [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Command: `{}` Run Success :gh-check-passed: \n```{}```".format(command,output)
-                        }
-                    }
-                ]
-        else:
-            ind=list(range(0,len(output),2900))
-            ind.append(len(output))
-            ind_list=[(ind[ind.index(i)],ind[ind.index(i)+1]) for i in ind if ind.index(i)<len(ind)-1]
-            block = [
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Command: `{}` Run Success :gh-check-passed:".format(command)
-                        }
-                    }
-                ]
-            [block.append({
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "```{}```".format(output[i[0]:i[1]])
-                        }
-                    }) for i in ind_list]
-            if len(block) > 50:
-                block=block[:50]
+        for each_node in output:
+            if len(output[each_node]) < 2900:
+                block.append({
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": "Command: `{}` Run Success on Node *{}* :gh-check-passed: \n```{}```".format(command,each_node,output[each_node])
+                            }
+                        })
+            else:
+                ind=list(range(0,len(output[each_node]),2900))
+                ind.append(len(output[each_node]))
+                ind_list=[(ind[ind.index(i)],ind[ind.index(i)+1]) for i in ind if ind.index(i)<len(ind)-1]
+                block.append({
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": "Command: `{}` Run Success :gh-check-passed:".format(command)
+                            }
+                        })
+                [block.append({
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": "```{}```".format(output[each_node][i[0]:i[1]])
+                            }
+                        }) for i in ind_list]
+            block.append({
+			    "type": "divider"
+		    })
     else:
-        block = [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Command: `{}` Run Failed :gh-check-failed: \n```{}```".format(command,output)
-                    }
-                }
-            ]
+        for each_node in output:
+            block.append({
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Command: `{}` Run Failed :gh-check-failed: \n```{}```".format(command,output[each_node])
+                        }
+                    })
+    if len(block) > 50:
+        block=block[:49]
+        block.append({
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*-------- Truncated to Output --------*"
+			}
+		})
     return block
 
 def generic_list(data):
