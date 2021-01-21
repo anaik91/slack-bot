@@ -233,6 +233,25 @@ def update_modal(body,ack,shortcut, client,view):
                         },
                         "min_query_length": 2
                     }
+                },{
+                    "type": "actions",
+                    "block_id": "tag_selection",
+                    "elements": [
+                        {
+                            "type": "checkboxes",
+                            "options": [
+                                {
+                                    "text": {
+                                        "type": "plain_text",
+                                        "text": "Run on all Servers matching the tag",
+                                        "emoji": True
+                                    },
+                                    "value": "check"
+                                }
+                            ],
+                            "action_id": "tag_selection"
+                        }
+                    ]
                 },
                 command_block,
                 {
