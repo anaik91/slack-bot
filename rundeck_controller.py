@@ -64,8 +64,13 @@ class rundeck:
         else:
             return False
 
-    def runCommand(self,project,node,command):
-        url = '{}/project/{}/run/command?filter=name:{}'.format(self.baseUrl,project,node)
+    def runCommand(self,project,command,node=None,tags=None):
+        filter='filter=name:{}'.format(node)
+        if node is not None:
+            filter='filter=name:{}'.format(node)
+        if tags is not None:
+            filter='filter=tags:{}'.format(tags)
+        url = '{}/project/{}/run/command?{}'.format(self.baseUrl,project,filter)
         payload = {
             "project":project,
             "exec":command,
