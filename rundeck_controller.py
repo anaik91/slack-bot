@@ -114,12 +114,9 @@ class rundeck:
         while not completed:
             completed,state,allNodes=self.getJobState(jobId)
             sleep(1)
-        outputTexts=[]
+        outputTexts={}
         for each_node in allNodes:
-            outputTexts.append(
-                {
-                    each_node:self.getJobOutputText(jobId,each_node)
-                })
+            outputTexts[each_node]=self.getJobOutputText(jobId,each_node)
         if state == 'SUCCEEDED':
             return True,outputTexts
         elif state == 'FAILED':
