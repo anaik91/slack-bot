@@ -119,7 +119,7 @@ class messageHandler:
             node = self.message[2]
             command = ' '.join(self.message[3:])
             log_path = command.split(' ')[-1]
-            jobid=r.runCommand(project,node,command)
+            jobid=r.runCommand(project,command,node=node)
             _,outputText=r.waitForJob(jobid)
             parsed=json.loads(outputText)
             url=parsed['url']

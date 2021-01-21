@@ -248,7 +248,7 @@ def handle_submission(ack, body, client,say, view):
         command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
     project,node,tags=tuple(node_value.split('#'))
-    m=messageHandler('run rc {} {}'.format(project,node,command_value),user,channelid)
+    m=messageHandler('run rc {} {} {}'.format(project,node,command_value),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 @app.action("log_button")
@@ -338,7 +338,7 @@ def handle_log_submission(ack, body, client,say, view):
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
     command='sudo python3 /tmp/minio_client.py --minio_url {} --minio_access_key {} --minio_secret_key {} --minio_bucket {} --file_location {}'.format(Config.MINIO_URL,Config.MINIO_ACCESS_KEY,Config.MINIO_SECRET_KEY,Config.MINIO_BUCKET,log_path)
     project,node,tags=tuple(node_value.split('#'))
-    m=messageHandler('gl {} {}'.format(project,node,command),user,channelid)
+    m=messageHandler('gl {} {} {}'.format(project,node,command),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 flask_app = Flask(__name__)
