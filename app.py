@@ -243,7 +243,7 @@ def update_modal(body,ack,shortcut, client,view):
                         "text": "Choose a Channel to Post the Output to "
                     },
                     "accessory": {
-                        "type": "multi_conversations_select",
+                        "type": "conversations_select",
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
@@ -341,7 +341,7 @@ def open_log_modal(body,ack,shortcut, client,view):
                     "text": "Choose a Channel to Post the Output to "
                 },
                 "accessory": {
-                    "type": "multi_conversations_select",
+                    "type": "conversations_select",
                     "placeholder": {
                         "type": "plain_text",
                         "text": "Select Channel",

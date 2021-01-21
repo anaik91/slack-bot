@@ -178,7 +178,7 @@ def get_command(command,status,output):
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "Command: `{}` Run Failed :gh-check-failed: \n```{}```".format(command,output[each_node])
+                            "text": "Command: `{}` Run Failed on Node *{}* :gh-check-failed: \n```{}```".format(command,each_node,output[each_node])
                         }
                     })
     if len(block) > 50:
