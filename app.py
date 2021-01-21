@@ -266,7 +266,7 @@ def handle_submission(ack, body, client,say, view):
         command_value=view["state"]["values"]['node_command']["node_command"]['value']
     else:
         command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
-    channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
+    channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
     project,node,tags=tuple(node_value.split('#'))
     if tag_check and len(tags) != 0:
         m=messageHandler('run rct {} {} {}'.format(project,tags.split(',')[0],command_value),user,channelid)
@@ -359,7 +359,7 @@ def handle_log_submission(ack, body, client,say, view):
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
     log_path=view["state"]["values"]['log_path']['log_path']['value']
-    channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
+    channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
     command='sudo python3 /tmp/minio_client.py --minio_url {} --minio_access_key {} --minio_secret_key {} --minio_bucket {} --file_location {}'.format(Config.MINIO_URL,Config.MINIO_ACCESS_KEY,Config.MINIO_SECRET_KEY,Config.MINIO_BUCKET,log_path)
     project,node,tags=tuple(node_value.split('#'))
     m=messageHandler('gl {} {} {}'.format(project,node,command),user,channelid)
