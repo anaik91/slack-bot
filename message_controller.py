@@ -124,7 +124,7 @@ class messageHandler:
             log_path = command.split(' ')[-1]
             jobid=r.runCommand(project,command,node=node)
             _,outputText=r.waitForJob(jobid)
-            parsed=json.loads(outputText)
+            parsed=json.loads(outputText['node'])
             url=parsed['url']
             if len(url)>0:
                 return get_log(url,log_path,node,True)
