@@ -104,6 +104,25 @@ def open_modal(body,ack,shortcut, client,view):
                         },
                         "min_query_length": 2
                     }
+                },{
+                    "type": "actions",
+                    "block_id": "tag_selection",
+                    "elements": [
+                        {
+                            "type": "checkboxes",
+                            "options": [
+                                {
+                                    "text": {
+                                        "type": "plain_text",
+                                        "text": "Run on all Servers matching the tag",
+                                        "emoji": True
+                                    },
+                                    "value": "check"
+                                }
+                            ],
+                            "action_id": "tag_selection"
+                        }
+                    ]
                 },
                 command_block,
                 {
@@ -145,7 +164,7 @@ def open_modal(body,ack,shortcut, client,view):
                         "text": "Choose a Channel to Post the Output to "
                     },
                     "accessory": {
-                        "type": "multi_conversations_select",
+                        "type": "conversations_select",
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
@@ -242,6 +261,7 @@ def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
+    tag_value=view["state"]["values"]['tag_selection']['tag_selection']['selected_option']['value']
     if 'selected_option' not in view["state"]["values"]['node_command']["node_command"].keys():
         command_value=view["state"]["values"]['node_command']["node_command"]['value']
     else:

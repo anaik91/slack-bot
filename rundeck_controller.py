@@ -70,6 +70,8 @@ class rundeck:
             filter='filter=name:{}'.format(node)
         if tags is not None:
             filter='filter=tags:{}'.format(tags)
+        if tags == 'all':
+            filter='filter=tags:ldap,msui,zookeeper,cassandra,router,mp,pgs,pgm,qpid'
         url = '{}/project/{}/run/command?{}'.format(self.baseUrl,project,filter)
         payload = {
             "project":project,
