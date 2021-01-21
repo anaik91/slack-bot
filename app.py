@@ -261,15 +261,19 @@ def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
-    tag_value=view["state"]["values"]['tag_selection']['tag_selection']['selected_option']['value']
+    tag_check=True if len(view["state"]["values"]['tag_selection']['tag_selection']['selected_options']) != 0 else False
     if 'selected_option' not in view["state"]["values"]['node_command']["node_command"].keys():
         command_value=view["state"]["values"]['node_command']["node_command"]['value']
     else:
         command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
     channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
     project,node,tags=tuple(node_value.split('#'))
-    m=messageHandler('run rc {} {} {}'.format(project,node,command_value),user,channelid)
-    say(channel=channelid,blocks=m.getBlock())
+    if tag_check and len(tags) != 0:
+        m=messageHandler('run rct {} {} {}'.format(project,tags.split(',')[0],command_value),user,channelid)
+        say(channel=channelid,blocks=m.getBlock())
+    else:
+        m=messageHandler('run rc {} {} {}'.format(project,node,command_value),user,channelid)
+        say(channel=channelid,blocks=m.getBlock())
 
 @app.action("log_button")
 def open_log_modal(body,ack,shortcut, client,view):

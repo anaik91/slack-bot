@@ -77,13 +77,16 @@ class messageHandler:
             if verb1 == 'rc':
                 process_slack_response(self.channel,blocks=get_running_command(command,verb3))
                 jobid=r.runCommand(verb2,command,node=verb3)
-                status,outputText=r.waitForJob(jobid)
-                if status:
-                    return get_command(command,status,outputText)
-                else:
-                    return get_command(command,status,outputText)
+            if verb1 == 'rct':
+                process_slack_response(self.channel,blocks=get_running_command(command,verb3))
+                jobid=r.runCommand(verb2,command,tags=verb3)
             else :
                 return get_run_help(self.user)
+            status,outputText=r.waitForJob(jobid)
+            if status:
+                return get_command(command,status,outputText)
+            else:
+                return get_command(command,status,outputText)
         else:
             return get_run_help(self.user)
     
