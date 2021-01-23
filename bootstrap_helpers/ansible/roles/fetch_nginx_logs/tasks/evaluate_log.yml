@@ -8,4 +8,4 @@
 
 - set_fact:
     filtered_access_logs: "{{ filtered_access_logs  }} + ['{{item.path}}']"
-    when: ( st.stdout| int > start_epoch and et.stdout| int < end_epoch )
+  when: (st.stdout|int > start_epoch|int and et.stdout|int < end_epoch|int) or (st.stdout|int == start_epoch|int and et.stdout|int == end_epoch|int)

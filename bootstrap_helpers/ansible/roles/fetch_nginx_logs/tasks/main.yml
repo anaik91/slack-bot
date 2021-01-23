@@ -29,3 +29,18 @@
 
 - debug:
     var: filtered_access_logs
+
+- name: Archive logs
+  archive:
+    path: "{{filtered_access_logs}}"
+    dest: "{{remote_archive_path}}/accesslogs.tgz"
+
+- fetch:
+    src: "{{remote_archive_path}}/accesslogs.tgz"
+    dest: "{{local_archive_path}}/{{epoch_time}}/{{ inventory_hostname }}-{{short_name}}-logs.tgz"
+    flat: yes
+
+- name: "Clean Files"
+  file:
+    path: "{{remote_archive_path}}/accesslogs.tgz"
+    state: absent

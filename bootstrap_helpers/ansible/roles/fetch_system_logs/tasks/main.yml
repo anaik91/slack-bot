@@ -10,3 +10,8 @@
     src: "{{remote_archive_path}}/logs.tgz"
     dest: "{{local_archive_path}}/{{epoch_time}}/{{ inventory_hostname }}-{{short_name}}-logs.tgz"
     flat: yes
+
+- name: "Clean Files"
+  file:
+    path: "{{remote_archive_path}}/logs.tgz"
+    state: absent

@@ -22,7 +22,7 @@
     local_archive_path: /tmp
   roles:
   - { role: fetch_system_logs , component_name: 'edge-router',short_name: 'rr-system'}
-  - { role: fetch_nginx_logs }
+  - { role: fetch_nginx_logs ,short_name: 'rr-access'}
 
 - hosts: localhost
   become: true
