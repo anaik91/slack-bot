@@ -138,7 +138,7 @@ resources:
   type: git
   source:
     uri: https://github.tools.sap/I500506/innoweek-ops-bot.git
-    branch: modal_change
+    branch: view_change
     private_key: null
     skip_ssl_verification: true
     password: ((credentials.landscape_git_password))
