@@ -19,7 +19,7 @@ def main():
     if not os.path.exists(args.file_location):
         print(json.dumps({'url':''}))
         sys.exit()
-    
+
     mc = Minio(
         args.minio_url,
         access_key=args.minio_access_key,
@@ -28,7 +28,11 @@ def main():
     )
     epoch=str(time()).split('.')[0]
     base=os.path.basename(args.file_location)
-    data=open(args.file_location,'rb').read()
+    try:
+        data=open(args.file_location,'rb').read()
+    except IsADirectoryError:
+        print(json.dumps({'url':''}))
+        sys.exit()
     filename='{}_{}'.format(epoch,base)
     mc.put_object(args.minio_bucket,filename,io.BytesIO(data),len(data))
     url=mc.presigned_get_object(args.minio_bucket,filename)

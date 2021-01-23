@@ -59,14 +59,15 @@ class messageHandler:
                 ps=r.listProjects()
                 servers=[]
                 for ep in ps:
-                    servers.extend([ '{}#{}'.format(ep,i) for i in r.listNodes(ep)])
+                    nodes=r.listNodes(ep)
+                    servers.extend([ '{}#{}#{}'.format(ep,i,nodes[i]['tags'] if 'tags' in nodes[i].keys() else '') for i in nodes])
                 return servers
             else :
                 return get_run_help(self.user)
         if len(self.message) == 3:
             verb2 = self.message[2]
             if verb1 == 'ln':
-                return generic_list(r.listNodes(verb2))
+                return generic_list(list(r.listNodes(verb2).keys()))
             else :
                 return get_run_help(self.user)
         if len(self.message) > 3:
@@ -75,14 +76,17 @@ class messageHandler:
             command = ' '.join(self.message[4:])
             if verb1 == 'rc':
                 process_slack_response(self.channel,blocks=get_running_command(command,verb3))
-                jobid=r.runCommand(verb2,verb3,command)
-                status,outputText=r.waitForJob(jobid)
-                if status:
-                    return get_command(command,status,outputText)
-                else:
-                    return get_command(command,status,outputText)
-            else :
+                jobid=r.runCommand(verb2,command,node=verb3)
+            elif verb1 == 'rct':
+                process_slack_response(self.channel,blocks=get_running_command(command,verb3))
+                jobid=r.runCommand(verb2,command,tags=verb3)
+            else:
                 return get_run_help(self.user)
+            status,outputText=r.waitForJob(jobid)
+            if status:
+                return get_command(command,status,outputText)
+            else:
+                return get_command(command,status,outputText)
         else:
             return get_run_help(self.user)
     
@@ -118,9 +122,9 @@ class messageHandler:
             node = self.message[2]
             command = ' '.join(self.message[3:])
             log_path = command.split(' ')[-1]
-            jobid=r.runCommand(project,node,command)
+            jobid=r.runCommand(project,command,node=node)
             _,outputText=r.waitForJob(jobid)
-            parsed=json.loads(outputText)
+            parsed=json.loads(outputText[node])
             url=parsed['url']
             if len(url)>0:
                 return get_log(url,log_path,node,True)

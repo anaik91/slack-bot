@@ -104,6 +104,25 @@ def open_modal(body,ack,shortcut, client,view):
                         },
                         "min_query_length": 2
                     }
+                },{
+                    "type": "actions",
+                    "block_id": "tag_selection",
+                    "elements": [
+                        {
+                            "type": "checkboxes",
+                            "options": [
+                                {
+                                    "text": {
+                                        "type": "plain_text",
+                                        "text": "Run on all Servers matching the tag",
+                                        "emoji": True
+                                    },
+                                    "value": "check"
+                                }
+                            ],
+                            "action_id": "tag_selection"
+                        }
+                    ]
                 },
                 command_block,
                 {
@@ -120,6 +139,22 @@ def open_modal(body,ack,shortcut, client,view):
                         },
                         "action_id": "custom_button"
                     }
+                },{
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Fetch Logs"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click Me",
+                            "emoji": True
+                        },
+                        "value": "click_me_123",
+                        "action_id": "log_button"
+                    }
                 },
                 {
                     "type": "section",
@@ -129,7 +164,7 @@ def open_modal(body,ack,shortcut, client,view):
                         "text": "Choose a Channel to Post the Output to "
                     },
                     "accessory": {
-                        "type": "multi_conversations_select",
+                        "type": "conversations_select",
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
@@ -198,6 +233,25 @@ def update_modal(body,ack,shortcut, client,view):
                         },
                         "min_query_length": 2
                     }
+                },{
+                    "type": "actions",
+                    "block_id": "tag_selection",
+                    "elements": [
+                        {
+                            "type": "checkboxes",
+                            "options": [
+                                {
+                                    "text": {
+                                        "type": "plain_text",
+                                        "text": "Run on all Servers matching the tag",
+                                        "emoji": True
+                                    },
+                                    "value": "check"
+                                }
+                            ],
+                            "action_id": "tag_selection"
+                        }
+                    ]
                 },
                 command_block,
                 {
@@ -208,7 +262,7 @@ def update_modal(body,ack,shortcut, client,view):
                         "text": "Choose a Channel to Post the Output to "
                     },
                     "accessory": {
-                        "type": "multi_conversations_select",
+                        "type": "conversations_select",
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Select Channel",
@@ -226,19 +280,26 @@ def handle_submission(ack, body, client,say, view):
     ack()
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
+    tag_check=True if len(view["state"]["values"]['tag_selection']['tag_selection']['selected_options']) != 0 else False
     if 'selected_option' not in view["state"]["values"]['node_command']["node_command"].keys():
         command_value=view["state"]["values"]['node_command']["node_command"]['value']
     else:
         command_value=view["state"]["values"]['node_command']["node_command"]['selected_option']['value']
-    channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
-    m=messageHandler('run rc {} {}'.format(node_value.replace('#',' '),command_value),user,channelid)
-    say(channel=channelid,blocks=m.getBlock())
+    channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
+    project,node,tags=tuple(node_value.split('#'))
+    if tag_check and len(tags) != 0:
+        m=messageHandler('run rct {} {} {}'.format(project,tags.split(',')[0],command_value),user,channelid)
+        say(channel=channelid,blocks=m.getBlock())
+    else:
+        m=messageHandler('run rc {} {} {}'.format(project,node,command_value),user,channelid)
+        say(channel=channelid,blocks=m.getBlock())
 
-@app.shortcut("get_log_callback")
+@app.action("log_button")
 def open_log_modal(body,ack,shortcut, client,view):
     ack()
-    client.views_open(
-        trigger_id=shortcut["trigger_id"],
+    client.views_update(
+        view_id=body["view"]["id"],
+        hash=body["view"]["hash"],
         view={
         "type": "modal",
         "callback_id": "get_log_view",
@@ -299,7 +360,7 @@ def open_log_modal(body,ack,shortcut, client,view):
                     "text": "Choose a Channel to Post the Output to "
                 },
                 "accessory": {
-                    "type": "multi_conversations_select",
+                    "type": "conversations_select",
                     "placeholder": {
                         "type": "plain_text",
                         "text": "Select Channel",
@@ -317,9 +378,10 @@ def handle_log_submission(ack, body, client,say, view):
     user = body["user"]["id"]
     node_value=view["state"]["values"]['node_ip']['node_ip']['selected_option']['value']
     log_path=view["state"]["values"]['log_path']['log_path']['value']
-    channelid="".join(view["state"]["values"]['channel_id']["channel_id"]['selected_conversations'])
+    channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
     command='sudo python3 /tmp/minio_client.py --minio_url {} --minio_access_key {} --minio_secret_key {} --minio_bucket {} --file_location {}'.format(Config.MINIO_URL,Config.MINIO_ACCESS_KEY,Config.MINIO_SECRET_KEY,Config.MINIO_BUCKET,log_path)
-    m=messageHandler('gl {} {}'.format(node_value.replace('#',' '),command),user,channelid)
+    project,node,tags=tuple(node_value.split('#'))
+    m=messageHandler('gl {} {} {}'.format(project,node,command),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
 
 flask_app = Flask(__name__)
