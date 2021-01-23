@@ -11,7 +11,6 @@
   roles:
   - { role: fetch_system_logs , component_name: 'edge-message-processor',short_name: 'mp-system'}
 
-
 - hosts: '*router'
   become: true
   become_user: root
@@ -39,3 +38,10 @@
     file:
       path: "{{local_archive_path}}/{{epoch_time}}"
       state: absent
+
+  - name: "Upload logs"
+    command: "sudo python3 /tmp/minio_client.py --minio_url {{minio_url}} --minio_access_key {{minio_access_key}} --minio_secret_key {{minio_secret_key}} --minio_bucket {{minio_bucket}} --file_location {{local_archive_path}}/{{epoch_time}}.tgz"
+    register: upload
+
+  - debug:
+      msg: "{{dict(upload.stdout)}}"
