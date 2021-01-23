@@ -24,18 +24,7 @@
 - set_fact:
     filtered_access_logs: []
 
-- block:
-  - name:
-    shell: "date -d \"$(zcat -f {{item.path}} | head -1 | cut -d$'\t' -f1)\" +%s"
-    register: st
-
-  - name:
-    shell: "date -d \"$(zcat -f {{item.path}} | tail -1 | cut -d$'\t' -f1)\" +%s"
-    register: et
-
-  - set_fact:
-      filtered_access_logs: "{{ filtered_access_logs  }} + {{item.path}}"
-  when: ( st.stdout > start_epoch and et.stdout < end_epoch ) or ( st.stdout == start_epoch and et.stdout == end_epoch )
+- include_tasks: evaluate_log.yml
   loop: "{{logs.files}}"
 
 - debug:
