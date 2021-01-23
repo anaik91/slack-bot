@@ -1,0 +1,26 @@
+- set_fact:
+    start_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
+  vars:  
+    query: "{{log_start_date}} {{log_start_time}}:00"
+  delegate_to: 127.0.0.1
+
+- set_fact:
+    end_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
+  vars:  
+    query: "{{log_end_date}} {{log_end_time}}:00"
+  delegate_to: 127.0.0.1
+
+- debug:
+    var: start_epoch
+
+- debug:
+    var: end_epoch
+
+- find:
+    paths: "{{apigee_log_dir}}/edge-router/nginx"
+    patterns: '{{org}}~{{env}}*access_log,{{org}}~{{env}}*.gz'
+  register: logs
+
+- debug:
+    var: item.path
+  loop: "{{logs.files}}"

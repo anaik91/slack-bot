@@ -1,0 +1,42 @@
+- hosts: '*router'
+  become: true
+  become_user: root
+  tags: ['rr']
+  vars:
+    log_start_date: '2021-01-19'
+    log_start_time: '00:00'
+    log_end_date: '2021-01-20'
+    log_end_time: '00:00'
+    local_archive_path: /tmp
+    apigee_dir: /opt/apigee
+    apigee_log_dir: /opt/apigee/var/log
+    remote_archive_path: "{{apigee_log_dir}}"
+    org: validate
+    env: test
+  tasks:
+  - set_fact:
+      start_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
+    vars:  
+      query: "{{log_start_date}} {{log_start_time}}:00"
+    delegate_to: 127.0.0.1
+
+  - set_fact:
+      end_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
+    vars:  
+      query: "{{log_end_date}} {{log_end_time}}:00"
+    delegate_to: 127.0.0.1
+
+  - debug:
+      var: start_epoch
+
+  - debug:
+      var: end_epoch
+
+  - find:
+      paths: "{{apigee_log_dir}}/edge-router/nginx"
+      patterns: '{{org}}~{{env}}*access_log,{{org}}~{{env}}*.gz'
+    register: logs
+  
+  # - debug:
+  #     var: item.path
+  #   loop: "{{logs.files}}"

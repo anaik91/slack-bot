@@ -1,0 +1,41 @@
+- hosts: '*mp'
+  become: true
+  become_user: root
+  tags: ['mp']
+  vars:
+    log_start_date: ''
+    log_start_time: ''
+    log_end_date: ''
+    log_end_time: ''
+    local_archive_path: ''
+  roles:
+  - { role: fetch_system_logs , component_name: 'edge-message-processor',short_name: 'mp-system'}
+
+
+- hosts: '*router'
+  become: true
+  become_user: root
+  tags: ['rr']
+  vars:
+    log_start_date: '2021-01-19'
+    log_end_date: '2021-01-20'
+    local_archive_path: /tmp
+  roles:
+  - { role: fetch_system_logs , component_name: 'edge-router',short_name: 'rr-system'}
+  - { role: fetch_nginx_logs }
+
+- hosts: localhost
+  become: true
+  tags: ['rr','mp']
+  become_user: root
+
+  tasks:
+  - name: Archive logs
+    archive:
+      path: "{{local_archive_path}}/{{epoch_time}}"
+      dest: "{{local_archive_path}}/{{epoch_time}}.tgz"
+
+  - name: "Clean Directory"
+    file:
+      path: "{{local_archive_path}}/{{epoch_time}}"
+      state: absent

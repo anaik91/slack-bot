@@ -1,0 +1,3 @@
+apigee_dir: /opt/apigee
+apigee_log_dir: /opt/apigee/var/log
+remote_archive_path: "{{apigee_log_dir}}"

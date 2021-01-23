@@ -1,0 +1,12 @@
+- name: Archive logs
+  archive:
+    path: 
+    - "{{apigee_log_dir}}/{{component_name}}/logs/system.log"
+    - "{{apigee_log_dir}}/{{component_name}}/logs/system*{{log_start_date}}*.log.gz"
+    - "{{apigee_log_dir}}/{{component_name}}/logs/system*{{log_end_date}}*.log.gz"
+    dest: "{{remote_archive_path}}/logs.tgz"
+
+- fetch:
+    src: "{{remote_archive_path}}/logs.tgz"
+    dest: "{{local_archive_path}}/{{epoch_time}}/{{ inventory_hostname }}-{{short_name}}-logs.tgz"
+    flat: yes
