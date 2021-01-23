@@ -44,4 +44,4 @@
     register: upload
 
   - debug:
-      msg: "{{dict(upload.stdout)}}"
+      msg: "{{upload.stdout}}"
