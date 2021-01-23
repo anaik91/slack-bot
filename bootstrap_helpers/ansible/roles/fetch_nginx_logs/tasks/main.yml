@@ -35,7 +35,7 @@
 
   - set_fact:
       filtered_access_logs: "{{ filtered_access_logs  }} + {{item.path}}"
-    when: ( st.stdout > start_epoch and et.stdout < end_epoch ) or ( st.stdout == start_epoch and et.stdout == end_epoch )
+  when: ( st.stdout > start_epoch and et.stdout < end_epoch ) or ( st.stdout == start_epoch and et.stdout == end_epoch )
   loop: "{{logs.files}}"
 
 - debug:
