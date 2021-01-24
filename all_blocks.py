@@ -296,3 +296,40 @@ def get_log(url,log_path,node,status):
         ]
 
     return block
+
+def get_running_job(job):
+    block = [
+            {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "{} Job is still in progress :ownid-loader: Hang tight".format(job)
+			}
+		}
+        ]
+    return block
+
+def get_rmp_log(org,env,sd,ed,st,et,url):
+    block = [
+            {
+            "type": "divider"
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Below is the link to download RMP Logs from \n • ORG {} \n • ENV {} \n • Start Time {} {} \n • End Time {} {}".format(org,env,sd,st,ed,st)
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Click <{}| on this is link> to Download {} from {}".format(url)
+                }
+            },
+            {
+                "type": "divider"
+            }
+        ]
+    return block

@@ -84,7 +84,19 @@ class rundeck:
             return data['execution']['id']
         else:
             return 'Error'
-    
+
+    def runJob(self,jobId,options):
+        url = '{}/job/{}/run'.format(self.baseUrl,jobId)
+        payload = {
+            "options":options
+        }
+        response=requests.post(url,headers=self.headers,json=payload,verify=False)
+        if response.status_code == 200:
+            data=response.json()
+            return data['id']
+        else:
+            return 'Error'
+
     def getJobState(self,jobId):
         url = '{}/execution/{}/state'.format(self.baseUrl,jobId)
         response=requests.get(url,headers=self.headers,verify=False)
@@ -109,6 +121,14 @@ class rundeck:
         else:
             return []
     
+    def getJobOutput(self,jobId,node):
+        url = '{}/execution/{}/output'.format(self.baseUrl,jobId)
+        response=requests.get(url,headers=self.headers,verify=False)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {}
+
     def waitForJob(self,jobId):
         completed,state,allNodes=self.getJobState(jobId)
         while not completed:
@@ -123,4 +143,3 @@ class rundeck:
             return False,outputTexts
         else:
             return False,outputTexts
-            
