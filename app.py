@@ -418,10 +418,10 @@ def handle_log_job_submission(ack, body, client,say, view):
     user = body["user"]["id"]
     org=view["state"]["values"]['org']['org']['value']
     env=view["state"]["values"]['env']['env']['value']
-    start_date=view["state"]["values"]['start_date']['start_date']['selected_option']['value']
-    start_time=view["state"]["values"]['start_time']['start_time']['selected_option']['value']
-    end_date=view["state"]["values"]['end_date']['end_date']['selected_option']['value']
-    end_time=view["state"]["values"]['end_time']['end_time']['selected_option']['value']
+    start_date=view["state"]["values"]['start_date']['start_date']['selected_date']['value']
+    start_time=view["state"]["values"]['start_time']['start_time']['selected_time']['value']
+    end_date=view["state"]["values"]['end_date']['end_date']['selected_date']['value']
+    end_time=view["state"]["values"]['end_time']['end_time']['selected_time']['value']
     channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
     options = {
             "log_start_time": start_time,
