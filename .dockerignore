@@ -69,3 +69,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+#repo
+bootstrap_helpers/
+k8s/
+doc/
