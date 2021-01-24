@@ -133,7 +133,7 @@ class rundeck:
         completed,state,allNodes=self.getJobState(jobId)
         while not completed:
             completed,state,allNodes=self.getJobState(jobId)
-            sleep(1)
+            sleep(15)
         outputTexts={}
         for each_node in allNodes:
             outputTexts[each_node]=self.getJobOutputText(jobId,each_node)

@@ -32,7 +32,8 @@
   - name: Archive logs
     archive:
       path: "{{local_archive_path}}/{{epoch_time}}"
-      dest: "{{local_archive_path}}/{{epoch_time}}.tgz"
+      dest: "{{local_archive_path}}/{{epoch_time}}.zip"
+      format: zip
 
   - name: "Clean Directory"
     file:
@@ -40,7 +41,7 @@
       state: absent
 
   - name: "Upload logs"
-    command: "sudo python3 /tmp/minio_client.py --minio_url {{minio_url}} --minio_access_key {{minio_access_key}} --minio_secret_key {{minio_secret_key}} --minio_bucket {{minio_bucket}} --file_location {{local_archive_path}}/{{epoch_time}}.tgz"
+    command: "sudo python3 /tmp/minio_client.py --minio_url {{minio_url}} --minio_access_key {{minio_access_key}} --minio_secret_key {{minio_secret_key}} --minio_bucket {{minio_bucket}} --file_location {{local_archive_path}}/{{epoch_time}}.zip"
     register: upload
 
   - debug:
@@ -50,5 +51,5 @@
 
   - name: "Clean File"
     file:
-      path: "{{local_archive_path}}/{{epoch_time}}.tgz"
+      path: "{{local_archive_path}}/{{epoch_time}}.zip"
       state: absent
