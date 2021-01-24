@@ -138,9 +138,9 @@ class messageHandler:
         jobid=r.runJob(Config.RUNDECK_LOG_JOB_ID,options)
         if jobid == 'Error':
             return get_error(self.user,'Issue Running Job')
-        completed,state,allNodes=r.getJobState(jobId)
+        completed,state,allNodes=r.getJobState(jobid)
         while not completed:
-            completed,state,allNodes=r.getJobState(jobId)
+            completed,state,allNodes=r.getJobState(jobid)
             process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs'))
             sleep(5)
         if state == 'SUCCEEDED':
