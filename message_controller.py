@@ -152,8 +152,8 @@ class messageHandler:
                 options['org'],
                 options['env'],
                 options['log_start_date'],
-                options['log_start_time'],
                 options['log_end_date'],
+                options['log_start_time'],
                 options['log_end_time'],
                 object_url
             )

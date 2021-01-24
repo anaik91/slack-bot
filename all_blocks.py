@@ -329,7 +329,7 @@ def get_rmp_log(org,env,sd,ed,st,et,url):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Below is the link to download RMP Logs from \n • ORG {} \n • ENV {} \n • Start Time {} {} \n • End Time {} {}".format(org,env,sd,st,ed,st)
+                    "text": "Below is the link to download RMP Logs from \n • ORG {} \n • ENV {} \n • Start Time {} {} \n • End Time {} {}".format(org,env,sd,st,ed,et)
                 }
             },
             {
