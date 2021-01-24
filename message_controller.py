@@ -140,10 +140,11 @@ class messageHandler:
         if jobid == 'Error':
             return get_error(self.user,'Issue Running Job')
         completed,state,allNodes=r.getJobState(jobid)
+        process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs','start'))
         while not completed:
             completed,state,allNodes=r.getJobState(jobid)
-            process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs'))
-            sleep(5)
+            process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs','progress'))
+            sleep(10)
         if state == 'SUCCEEDED':
             jobOutput=r.getJobOutput(jobid)
             object_url=jobOutput['entries'][-1]['log']
