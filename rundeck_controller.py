@@ -121,7 +121,7 @@ class rundeck:
         else:
             return []
     
-    def getJobOutput(self,jobId,node):
+    def getJobOutput(self,jobId):
         url = '{}/execution/{}/output'.format(self.baseUrl,jobId)
         response=requests.get(url,headers=self.headers,verify=False)
         if response.status_code == 200:
