@@ -438,7 +438,7 @@ def handle_log_job_submission(ack, body, client,say, view):
             "ssh_user": Config.RUNDECK_SSH_USER
         }
     m=messageHandler('',user,channelid)
-    say(channel=channelid,blocks=m.getRunJobBlock())
+    say(channel=channelid,blocks=m.getRunJobBlock(options))
 
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)
