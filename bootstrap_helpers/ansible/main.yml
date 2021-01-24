@@ -46,7 +46,7 @@
   - debug:
       msg: "{{upload.stdout}}"
 
-  - copy: content="{{upload.stdout.url}}" dest=upload_status
+  - copy: content="{{upload.stdout}}" dest=upload_status
 
   - name: "Clean File"
     file:

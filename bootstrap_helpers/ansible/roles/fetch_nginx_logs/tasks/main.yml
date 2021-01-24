@@ -1,12 +1,12 @@
 - set_fact:
     start_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
-  vars:  
+  vars:
     query: "{{log_start_date}} {{log_start_time}}:00"
   delegate_to: 127.0.0.1
 
 - set_fact:
     end_epoch: "{{(query |to_datetime).strftime('%s') | int }}"
-  vars:  
+  vars:
     query: "{{log_end_date}} {{log_end_time}}:00"
   delegate_to: 127.0.0.1
 
@@ -34,13 +34,16 @@
   archive:
     path: "{{filtered_access_logs}}"
     dest: "{{remote_archive_path}}/accesslogs.tgz"
+  when: filtered_access_logs|length > 0
 
 - fetch:
     src: "{{remote_archive_path}}/accesslogs.tgz"
     dest: "{{local_archive_path}}/{{epoch_time}}/{{ inventory_hostname }}-{{short_name}}-logs.tgz"
     flat: yes
+  when: filtered_access_logs|length > 0
 
 - name: "Clean Files"
   file:
     path: "{{remote_archive_path}}/accesslogs.tgz"
     state: absent
+  when: filtered_access_logs|length > 0
