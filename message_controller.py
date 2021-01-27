@@ -144,7 +144,7 @@ class messageHandler:
         while not completed:
             completed,state,allNodes=r.getJobState(jobid)
             process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs','progress'))
-            sleep(10)
+            sleep(15)
         if state == 'SUCCEEDED':
             jobOutput=r.getJobOutput(jobid)
             object_url=jobOutput['entries'][-1]['log']
