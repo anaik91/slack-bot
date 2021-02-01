@@ -1,10 +1,12 @@
 import logging
 import json
+from requests.api import options
 from slack_bolt import App
 from flask import Flask, request ,jsonify
 from slack_bolt.adapter.flask import SlackRequestHandler
 from config import Config
 from message_controller import messageHandler
+from log_fetch import rmp
 logging.basicConfig(level=logging.DEBUG)
 app = App()
 Config.COMMAND_LIST=json.loads(open(Config.COMMAND_LIST_FILE).read())
@@ -154,6 +156,23 @@ def open_modal(body,ack,shortcut, client,view):
                         },
                         "value": "click_me_123",
                         "action_id": "log_button"
+                    }
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Fetch RMP Logs"
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click Me",
+                            "emoji": True
+                        },
+                        "value": "click_me_123",
+                        "action_id": "rmp_log_button"
                     }
                 },
                 {
@@ -383,6 +402,43 @@ def handle_log_submission(ack, body, client,say, view):
     project,node,tags=tuple(node_value.split('#'))
     m=messageHandler('gl {} {} {}'.format(project,node,command),user,channelid)
     say(channel=channelid,blocks=m.getBlock())
+
+@app.action("rmp_log_button")
+def open_log_job_modal(body,ack,shortcut, client,view):
+    ack()
+    rmpclient=rmp()
+    client.views_update(
+        view_id=body["view"]["id"],
+        hash=body["view"]["hash"],
+        view=rmpclient.get_modal_view())
+
+@app.view("get_log_job_view")
+def handle_log_job_submission(ack, body, client,say, view):
+    ack()
+    user = body["user"]["id"]
+    org=view["state"]["values"]['org']['org']['value']
+    env=view["state"]["values"]['env']['env']['value']
+    start_date=view["state"]["values"]['start_date']['start_date']['selected_date']
+    start_time=view["state"]["values"]['start_time']['start_time']['selected_time']
+    end_date=view["state"]["values"]['end_date']['end_date']['selected_date']
+    end_time=view["state"]["values"]['end_time']['end_time']['selected_time']
+    channelid=view["state"]["values"]['channel_id']["channel_id"]['selected_conversation']
+    options = {
+            "log_start_time": start_time,
+            "log_end_date": end_date,
+            "org": org,
+            "log_end_time": end_time,
+            "minio_url": Config.MINIO_URL,
+            "minio_access_key": Config.MINIO_ACCESS_KEY,
+            "minio_secret_key": Config.MINIO_SECRET_KEY,
+            "log_start_date": start_date,
+            "env": env,
+            "minio_bucket": Config.MINIO_BUCKET,
+            "ssh_private_key": Config.RUNDECK_SSH_PRIVATE_KEY,
+            "ssh_user": Config.RUNDECK_SSH_USER
+        }
+    m=messageHandler('',user,channelid)
+    say(channel=channelid,blocks=m.getRunJobBlock(options))
 
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)

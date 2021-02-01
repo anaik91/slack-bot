@@ -1,3 +1,4 @@
+from time import sleep
 import logging
 import shlex
 from slack_sdk.web import WebClient
@@ -130,3 +131,33 @@ class messageHandler:
                 return get_log(url,log_path,node,True)
             else:
                 return get_log(url,log_path,node,False)
+
+    def getRunJobBlock(self,options):
+        r = rundeck(Config.RUNDECK_API_URL,Config.RUNDECK_API_TOKEN)
+        if not r.isValidAuthToken():
+            return get_error(self.user,'Invalid Rundeck Config')
+        jobid=r.runJob(Config.RUNDECK_LOG_JOB_ID,options)
+        if jobid == 'Error':
+            return get_error(self.user,'Issue Running Job')
+        completed,state,allNodes=r.getJobState(jobid)
+        process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs','start'))
+        while not completed:
+            completed,state,allNodes=r.getJobState(jobid)
+            process_slack_response(self.channel,blocks=get_running_job('Fetching RMP Logs','progress'))
+            sleep(15)
+        if state == 'SUCCEEDED':
+            jobOutput=r.getJobOutput(jobid)
+            object_url=jobOutput['entries'][-1]['log']
+            return get_rmp_log(
+                options['org'],
+                options['env'],
+                options['log_start_date'],
+                options['log_end_date'],
+                options['log_start_time'],
+                options['log_end_time'],
+                object_url
+            )
+        elif state == 'FAILED':
+            return get_error(self.user,'Failed to Fetch Logs. Check Rundeck Job ID : {}'.format(jobid))
+        else:
+            return get_error(self.user,'Failed to Fetch Logs. Check Rundeck Job ID : {}'.format(jobid))

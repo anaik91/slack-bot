@@ -138,7 +138,7 @@ resources:
   type: git
   source:
     uri: https://github.tools.sap/I500506/innoweek-ops-bot.git
-    branch: master
+    branch: advanced_logs
     private_key: null
     skip_ssl_verification: true
     password: ((credentials.landscape_git_password))
@@ -146,6 +146,7 @@ resources:
     ignore_paths:
     - doc/*
     - bootstrap_helpers/*
+    - README.md
 
 - name: docker-image
   type: docker-image

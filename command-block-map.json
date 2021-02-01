@@ -215,6 +215,63 @@
 		{
 			"type": "divider"
 		}
+	],
+    "custom": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Cassandra Custom Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To repair the cassandra ring and distribute the load evenly to all the cassandra nodes.",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`/opt/apigee/apigee-cassandra/bin/nodetool -h localhost repair -p`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "In a single-region or single-data-center APIM installation, use the command \"nodetool -h localhost repair \" on one Cassandra node to ensure consistency across all nodes in the ring. \n\nIn a multi-region or multi-data-center APIM installation, use \"nodetool -h localhost repair -pr\" on every node in the ring (across all regions or data centers",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.18.01/apache-cassandra-maintenance-tasks",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
 	]
   },
   "zk": {
@@ -1463,7 +1520,8 @@
     "uninstall": [
       {
         "type": "divider"
-      }, {
+      },
+      {
         "type": "header",
         "text": {
           "type": "plain_text",
@@ -1503,7 +1561,8 @@
     "service": [
       {
         "type": "divider"
-      }, {
+      },
+      {
         "type": "header",
         "text": {
           "type": "plain_text",
@@ -1620,6 +1679,55 @@
 				},
 				"value": "click_me_123",
 				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "custom": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Router Custom Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To check the status of the router process, run the following command in any of the APIM cluster node,",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`curl -v http://router_IP:8081/v1/servers/self/up`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.18.05/how-monitor",
 				"action_id": "button-action"
 			}
 		},
@@ -1836,6 +1944,55 @@
 				},
 				"value": "click_me_123",
 				"url": "https://docs.apigee.com/private-cloud/v4.19.06/how-perform-restore#:~:text=You%20can%20restore%20a%20component,a%20filename%20was%20not%20specified.",
+				"action_id": "button-action"
+			}
+		},
+		{
+			"type": "divider"
+		}
+	],
+    "custom": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": " Message Proccessor Custom Commands",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "To check the status of the MP process, run the following command in any of the APIM cluster node,",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "`curl -v http://MP_IP:8082/v1/servers/self/up`"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Reference Doc"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Click Me",
+					"emoji": true
+				},
+				"value": "click_me_123",
+				"url": "https://docs.apigee.com/private-cloud/v4.18.05/how-monitor",
 				"action_id": "button-action"
 			}
 		},

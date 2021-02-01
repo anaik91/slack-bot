@@ -1,0 +1,11 @@
+- name: Get Access log start date
+  shell: "date -d \"$(zcat -f {{item.path}} | head -1 | cut -d$'\t' -f1)\" +%s"
+  register: st
+
+- name: Get Access log end date
+  shell: "date -d \"$(zcat -f {{item.path}} | tail -1 | cut -d$'\t' -f1)\" +%s"
+  register: et
+
+- set_fact:
+    filtered_access_logs: "{{ filtered_access_logs  }} + ['{{item.path}}']"
+  when: (st.stdout|int > start_epoch|int and et.stdout|int < end_epoch|int) or (st.stdout|int == start_epoch|int and et.stdout|int == end_epoch|int)
