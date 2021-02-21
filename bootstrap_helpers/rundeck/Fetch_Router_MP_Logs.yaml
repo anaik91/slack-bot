@@ -1,0 +1,78 @@
+- defaultTab: output
+  description: Access logs based on ORG Name & Start Date & End Date
+  executionEnabled: true
+  id: 4b253982-2eba-4f2d-97d2-7a8a7b265a2d
+  loglevel: INFO
+  name: Fetch_Router_MP_Logs
+  nodeFilterEditable: false
+  options:
+  - name: log_start_date
+    required: true
+  - name: log_start_time
+    required: true
+  - name: log_end_date
+    required: true
+  - name: log_end_time
+    required: true
+  - name: org
+    required: true
+    value: validate
+  - label: env
+    name: env
+    value: test
+  - label: minio_access_key
+    name: minio_access_key
+    secure: true
+    value: DIT3KFnTnKxXLdh3SvRT
+    valueExposed: true
+  - label: minio_bucket
+    name: minio_bucket
+    value: logs
+  - label: minio_secret_key
+    name: minio_secret_key
+    secure: true
+    value: s0eaisq4Ng7revPaKXMhkms7Y47t3DWxkpWCBSK4
+    valueExposed: true
+  - label: minio_url
+    name: minio_url
+    value: 52.155.165.39:9000
+  - label: ssh_private_key
+    name: ssh_private_key
+    value: /etc/ansible/priv
+  - label: ssh_user
+    name: ssh_user
+    value: concourseci
+  plugins:
+    ExecutionLifecycle: null
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - script: |-
+        #!/bin/bash
+
+        epoch_time="$(python3 -c 'import time;print(str(time.time()))')"
+        local_archive_path="/tmp"
+        sudo rm -rf innoweek-ops-bot
+        git clone https://i501950:e8195c148a59e8ef69679c8cea50587cdbc464b6@github.tools.sap/I500506/innoweek-ops-bot.git
+        cd innoweek-ops-bot
+        git checkout advanced_logs
+        cd bootstrap_helpers/ansible
+
+        sudo /usr/local/bin/ansible-playbook main.yml -i /tmp/ansible --user @option.ssh_user@ --private-key @option.ssh_private_key@ -become  \
+            -e log_start_date=@option.log_start_date@ \
+            -e log_start_time=@option.log_start_time@ \
+            -e log_end_date=@option.log_end_date@ \
+            -e log_end_time=@option.log_end_time@ \
+            -e epoch_time=${epoch_time} \
+            -e local_archive_path=${local_archive_path} \
+            -e org=@option.org@ \
+            -e env=@option.env@ \
+            -e minio_url=@option.minio_url@ \
+            -e minio_access_key=@option.minio_access_key@ \
+            -e minio_secret_key=@option.minio_secret_key@ \
+            -e minio_bucket=@option.minio_bucket@
+
+        cat upload_status | jq -r .url
+    keepgoing: false
+    strategy: node-first
+  uuid: 4b253982-2eba-4f2d-97d2-7a8a7b265a2d
